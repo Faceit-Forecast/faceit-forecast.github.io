@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="googled76e14693496119b"/>
+    <title>Faceit Forecast</title>
+    <style>
+        @property --angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes spin {
+            0% { --angle: 0deg; }
+            to { --angle: 360deg; }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #161616;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #202020;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff7300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            border-bottom: 1px solid #393a43;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-container::before {
+            content: "";
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
+            border-radius: 12px;
+            z-index: -1;
+            animation: 3s spin linear infinite;
+            filter: blur(3px);
+            opacity: 0.8;
+        }
+
+        .logo-img {
+            width: 46px;
+            height: 46px;
+            background-color: #202020;
+            border-radius: 12px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px;
+            overflow: hidden;
+        }
+
+        .logo-img svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .online-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #202020;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid #393a43;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .online-text {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .online-number {
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 0 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: #aaa;
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease 0.2s backwards;
+        }
+
+        .download-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            animation: fadeIn 0.8s ease 0.4s backwards;
+        }
+
+        .download-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background-color: transparent;
+            border: 1px solid #393a43;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
+            border-radius: 10px;
+            z-index: -2;
+            opacity: 0;
+            filter: blur(3px);
+            transition: opacity 0.3s;
+        }
+
+        .download-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            z-index: -1;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .download-btn:hover::before {
+            opacity: 1;
+            animation: 3s spin linear infinite;
+        }
+
+        .download-btn:hover::after {
+            background-color: #3a3a3a;
+        }
+
+        .browser-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .browser-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 30px 0 60px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background-color: #202020;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #393a43;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background-color: #2a2a2a;
+            border-color: #ff7300;
+            transform: translateY(-3px);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* Support Section */
+        .support-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .support-section h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .support-section .subtitle {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .support-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background-color: transparent;
+            border: 1px solid #393a43;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .support-btn::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
+            border-radius: 10px;
+            z-index: -2;
+            opacity: 0;
+            filter: blur(3px);
+            transition: opacity 0.3s;
+        }
+
+        .support-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            z-index: -1;
+            transition: background-color 0.3s;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .support-btn:hover::before {
+            opacity: 1;
+            animation: 3s spin linear infinite;
+        }
+
+        .support-btn:hover::after {
+            background-color: #3a3a3a;
+        }
+
+        .support-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer Links */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 50px 0;
+            flex-wrap: wrap;
+            border-top: 1px solid #393a43;
+            margin-top: 60px;
+        }
+
+        .footer-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background-color: transparent;
+            border: 1px solid #393a43;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-link::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
+            border-radius: 10px;
+            z-index: -2;
+            opacity: 0;
+            filter: blur(3px);
+            transition: opacity 0.3s;
+        }
+
+        .footer-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            z-index: -1;
+            transition: background-color 0.3s;
+        }
+
+        .footer-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            animation: 3s spin linear infinite;
+        }
+
+        .footer-link:hover::after {
+            background-color: #3a3a3a;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #777;
+            border-top: 1px solid #393a43;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #161616;
+            margin: 2% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+            border: 1px solid #393a43;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #393a43;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .close-modal {
+            color: #aaa;
+            font-size: 32px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-body h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .modal-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body h3 {
+            color: #aaa;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-body p {
+            color: #aaa;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .modal-body ul, .modal-body ol {
+            color: #aaa;
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+        }
+
+        .modal-body code {
+            background-color: #2a2a2a;
+            color: #ff7300;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .modal-body a {
+            color: #ff7300;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .modal-body a:hover {
+            color: #f50;
+        }
+
+        .modal-body strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .modal-body small {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .highlight {
+            background-color: rgba(255, 115, 0, 0.1);
+            padding: 20px;
+            border-left: 4px solid #ff7300;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight p {
+            color: #fff;
+        }
+
+        .contact-info {
+            background-color: #202020;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #393a43;
+            margin-top: 30px;
+        }
+
+        .contact-info h2 {
+            margin-top: 0;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #393a43;
+            margin: 30px 0;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #202020;
+            border: 1px solid #393a43;
+            border-radius: 10px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-selector select {
+            border: none;
+            background: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .language-selector select option {
+            background: #202020;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero .subtitle {
+                font-size: 16px;
+            }
+
+            .download-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .download-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .features h2 {
+                font-size: 32px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-section h2 {
+                font-size: 32px;
+            }
+
+            .support-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .support-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-link {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+
+            .modal-header h1 {
+                font-size: 24px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-body h2 {
+                font-size: 20px;
+            }
+
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<canvas id="particleCanvas"></canvas>
+
+<div class="content-wrapper">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-container">
+                        <div class="logo-img">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 64 64">
+                                <path fill="#222" d="M0 0h64v64H0V0Z"/>
+                                <path fill="#fff" d="M16.886 11.886a5 5 0 0 0-5 5v30.411a5 5 0 0 0 5 5h30.411a5 5 0 0 0 5-5V16.886a5 5 0 0 0-5-5H16.886Zm29.832 1.828a3.75 3.75 0 0 1 3.75 3.75V46.72a3.75 3.75 0 0 1-3.75 3.75H17.464a3.75 3.75 0 0 1-3.75-3.75V17.464a3.75 3.75 0 0 1 3.75-3.75H46.72Z"/>
+                                <path fill="#fff" d="M45.226 47.726a2.5 2.5 0 0 0 2.5-2.5V18.957a2.5 2.5 0 0 0-2.5-2.5H18.957a2.5 2.5 0 0 0-2.5 2.5v26.269a2.5 2.5 0 0 0 2.5 2.5h26.269Zm-25.44-1.829a1.5 1.5 0 0 1-1.5-1.5V19.786a1.5 1.5 0 0 1 1.5-1.5h24.611a1.5 1.5 0 0 1 1.5 1.5v24.611a1.5 1.5 0 0 1-1.5 1.5H19.786Z"/>
+                                <path fill="#D9D9D9" d="M54.126 27.429h5.485v2.011h-5.485v-2.011Z"/>
+                                <path fill="#D9D9D9" d="M60.526 28.434c0 .556-.41 1.006-.915 1.006-.505 0-.914-.45-.914-1.006 0-.555.41-1.005.914-1.005.505 0 .915.45.915 1.005Zm-6.4-8.32h5.485v2.012h-5.485v-2.012Z"/>
+                                <path fill="#D9D9D9" d="M60.526 21.12c0 .555-.41 1.006-.915 1.006-.505 0-.914-.45-.914-1.006 0-.555.41-1.006.914-1.006.505 0 .915.45.915 1.006Zm-6.4 13.623h5.485v2.011h-5.485v-2.011Z"/>
+                                <path fill="#D9D9D9" d="M60.526 35.749c0 .555-.41 1.005-.915 1.005-.505 0-.914-.45-.914-1.005 0-.556.41-1.006.914-1.006.505 0 .915.45.915 1.006Zm-6.4 6.308h5.485v2.012h-5.485v-2.012Z"/>
+                                <path fill="#D9D9D9" d="M60.526 43.063c0 .555-.41 1.006-.915 1.006-.505 0-.914-.45-.914-1.006s.41-1.006.914-1.006c.505 0 .915.45.915 1.006ZM10.057 27.429H4.571v2.011h5.486v-2.011Z"/>
+                                <path fill="#D9D9D9" d="M3.657 28.434c0 .556.41 1.006.914 1.006.505 0 .915-.45.915-1.006 0-.555-.41-1.005-.915-1.005-.505 0-.914.45-.914 1.005Zm6.4-8.32H4.571v2.012h5.486v-2.012Z"/>
+                                <path fill="#D9D9D9" d="M3.657 21.12c0 .555.41 1.006.914 1.006.505 0 .915-.45.915-1.006 0-.555-.41-1.006-.915-1.006-.505 0-.914.45-.914 1.006Zm6.4 13.623H4.571v2.011h5.486v-2.011Z"/>
+                                <path fill="#D9D9D9" d="M3.657 35.749c0 .555.41 1.005.914 1.005.505 0 .915-.45.915-1.005 0-.556-.41-1.006-.915-1.006-.505 0-.914.45-.914 1.006Zm6.4 6.308H4.571v2.012h5.486v-2.012Z"/>
+                                <path fill="#D9D9D9" d="M3.657 43.063c0 .555.41 1.006.914 1.006.505 0 .915-.45.915-1.006s-.41-1.006-.915-1.006c-.505 0-.914.45-.914 1.006Zm33.097 11.063v5.485h-2.011v-5.485h2.011Z"/>
+                                <path fill="#D9D9D9" d="M35.749 60.526c-.556 0-1.006-.41-1.006-.915 0-.505.45-.914 1.006-.914.555 0 1.005.41 1.005.914 0 .505-.45.915-1.005.915Zm8.32-6.4v5.485h-2.012v-5.485h2.012Z"/>
+                                <path fill="#D9D9D9" d="M43.063 60.526c-.556 0-1.006-.41-1.006-.915 0-.505.45-.914 1.006-.914.555 0 1.006.41 1.006.914 0 .505-.45.915-1.006.915Zm-13.623-6.4v5.485h-2.011v-5.485h2.011Z"/>
+                                <path fill="#D9D9D9" d="M28.434 60.526c-.555 0-1.005-.41-1.005-.915 0-.505.45-.914 1.005-.914.556 0 1.006.41 1.006.914 0 .505-.45.915-1.006.915Zm-6.308-6.4v5.485h-2.012v-5.485h2.012Z"/>
+                                <path fill="#D9D9D9" d="M21.12 60.526c-.555 0-1.006-.41-1.006-.915 0-.505.45-.914 1.006-.914.555 0 1.006.41 1.006.914 0 .505-.45.915-1.006.915Zm15.634-50.469V4.571h-2.011v5.486h2.011Z"/>
+                                <path fill="#D9D9D9" d="M35.749 3.657c-.556 0-1.006.41-1.006.914 0 .505.45.915 1.006.915.555 0 1.005-.41 1.005-.915 0-.505-.45-.914-1.005-.914Zm8.32 6.4V4.571h-2.012v5.486h2.012Z"/>
+                                <path fill="#D9D9D9" d="M43.063 3.657c-.556 0-1.006.41-1.006.914 0 .505.45.915 1.006.915.555 0 1.006-.41 1.006-.915 0-.505-.45-.914-1.006-.914Zm-13.623 6.4V4.571h-2.011v5.486h2.011Z"/>
+                                <path fill="#D9D9D9" d="M28.434 3.657c-.555 0-1.005.41-1.005.914 0 .505.45.915 1.005.915.556 0 1.006-.41 1.006-.915 0-.505-.45-.914-1.006-.914Zm-6.308 6.4V4.571h-2.012v5.486h2.012Z"/>
+                                <path fill="#D9D9D9" d="M21.12 3.657c-.555 0-1.006.41-1.006.914 0 .505.45.915 1.006.915.555 0 1.006-.41 1.006-.915 0-.505-.45-.914-1.006-.914Zm4.05 27.818c0-.345.28-.625.624-.625h2.773c.346 0 .625.28.625.625v2.773c0 .345-.28.625-.625.625h-2.773a.625.625 0 0 1-.625-.625v-2.773Z"/>
+                                <path fill="#D9D9D9" d="M23.393 29.74a.5.5 0 0 1 .613-.353l5.7 1.527a.5.5 0 0 1 .353.612l-.224.836a.5.5 0 0 1-.612.353l-5.7-1.527a.5.5 0 0 1-.354-.612l.224-.836ZM38.7 31.475a.625.625 0 0 0-.624-.625h-2.773a.625.625 0 0 0-.625.625v2.773c0 .345.28.625.625.625h2.773c.345 0 .625-.28.625-.625v-2.773Z"/>
+                                <path fill="#D9D9D9" d="M40.477 29.74a.5.5 0 0 0-.612-.353l-5.7 1.527a.5.5 0 0 0-.354.612l.224.836a.5.5 0 0 0 .613.353l5.7-1.527a.5.5 0 0 0 .353-.612l-.224-.836Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="logo-text">FORECAST</span>
+                </a>
+
+                <div class="online-counter">
+                    <div class="online-dot"></div>
+                    <span class="online-text">Online:</span>
+                    <span class="online-number" id="online">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>FACEIT FORECAST</h1>
+                <p class="subtitle">A convenient extension for detailed Faceit statistics</p>
+
+                <div class="download-section">
+                    <a href="https://chromewebstore.google.com/detail/faceit-forecast/mpkkcddegpblmobincjkbpgfcbejjbcp"
+                       class="download-btn" target="_blank" rel="noopener">
+                        <div class="browser-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 viewBox="0 0 48 48" height="48" width="48">
+                                <defs>
+                                    <linearGradient id="a" x1="3.2173" y1="15" x2="44.7812" y2="15"
+                                                    gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#d93025"/>
+                                        <stop offset="1" stop-color="#ea4335"/>
+                                    </linearGradient>
+                                    <linearGradient id="b" x1="20.7219" y1="47.6791" x2="41.5039" y2="11.6837"
+                                                    gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#fcc934"/>
+                                        <stop offset="1" stop-color="#fbbc04"/>
+                                    </linearGradient>
+                                    <linearGradient id="c" x1="26.5981" y1="46.5015" x2="5.8161" y2="10.506"
+                                                    gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#1e8e3e"/>
+                                        <stop offset="1" stop-color="#34a853"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="24" cy="23.9947" r="12" style="fill:#fff"/>
+                                <path d="M3.2154,36A24,24,0,1,0,12,3.2154,24,24,0,0,0,3.2154,36ZM34.3923,18A12,12,0,1,1,18,13.6077,12,12,0,0,1,34.3923,18Z"
+                                      style="fill:none"/>
+                                <path d="M24,12H44.7812a23.9939,23.9939,0,0,0-41.5639.0029L13.6079,30l.0093-.0024A11.9852,11.9852,0,0,1,24,12Z"
+                                      style="fill:url(#a)"/>
+                                <circle cx="24" cy="24" r="9.5" style="fill:#1a73e8"/>
+                                <path d="M34.3913,30.0029,24.0007,48A23.994,23.994,0,0,0,44.78,12.0031H23.9989l-.0025.0093A11.985,11.985,0,0,1,34.3913,30.0029Z"
+                                      style="fill:url(#b)"/>
+                                <path d="M13.6086,30.0031,3.218,12.006A23.994,23.994,0,0,0,24.0025,48L34.3931,30.0029l-.0067-.0068a11.9852,11.9852,0,0,1-20.7778.007Z"
+                                      style="fill:url(#c)"/>
+                            </svg>
+                        </div>
+                        Chrome
+                    </a>
+
+                    <a href="https://addons.mozilla.org/en-US/firefox/addon/faceit-forecast" class="download-btn"
+                       target="_blank" rel="noopener">
+                        <div class="browser-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><defs><radialGradient id="g" cx="210%" cy="-100%" r="290%"><stop offset=".1" stop-color="#ffe226"/><stop offset=".79" stop-color="#ff7139"/></radialGradient><radialGradient id="c" cx="49%" cy="40%" r="128%" gradientTransform="matrix(.82 0 0 1 .088 0)"><stop offset=".3" stop-color="#960e18"/><stop offset=".35" stop-color="#b11927" stop-opacity=".74"/><stop offset=".43" stop-color="#db293d" stop-opacity=".34"/><stop offset=".5" stop-color="#f5334b" stop-opacity=".09"/><stop offset=".53" stop-color="#ff3750" stop-opacity="0"/></radialGradient><radialGradient id="d" cx="48%" cy="-12%" r="140%"><stop offset=".13" stop-color="#fff44f"/><stop offset=".53" stop-color="#ff980e"/></radialGradient><radialGradient id="e" cx="22.76%" cy="110.11%" r="100%"><stop offset=".35" stop-color="#3a8ee6"/><stop offset=".67" stop-color="#9059ff"/><stop offset="1" stop-color="#c139e6"/></radialGradient><radialGradient id="f" cx="52%" cy="33%" r="59%" gradientTransform="scale(.9 1)"><stop offset=".21" stop-color="#9059ff" stop-opacity="0"/><stop offset=".97" stop-color="#6e008b" stop-opacity=".6"/></radialGradient><radialGradient id="b" cx="87.4%" cy="-12.9%" r="128%" gradientTransform="matrix(.8 0 0 1 .178 .129)"><stop offset=".13" stop-color="#ffbd4f"/><stop offset=".28" stop-color="#ff980e"/><stop offset=".47" stop-color="#ff3750"/><stop offset=".78" stop-color="#eb0878"/><stop offset=".86" stop-color="#e50080"/></radialGradient><radialGradient id="h" cx="84%" cy="-41%" r="180%"><stop offset=".11" stop-color="#fff44f"/><stop offset=".46" stop-color="#ff980e"/><stop offset=".72" stop-color="#ff3647"/><stop offset=".9" stop-color="#e31587"/></radialGradient><radialGradient id="i" cx="16.1%" cy="-18.6%" r="348.8%" gradientTransform="scale(1 .47) rotate(84 .279 -.297)"><stop offset="0" stop-color="#fff44f"/><stop offset=".3" stop-color="#ff980e"/><stop offset=".57" stop-color="#ff3647"/><stop offset=".74" stop-color="#e31587"/></radialGradient><radialGradient id="j" cx="18.9%" cy="-42.5%" r="238.4%"><stop offset=".14" stop-color="#fff44f"/><stop offset=".48" stop-color="#ff980e"/><stop offset=".66" stop-color="#ff3647"/><stop offset=".9" stop-color="#e31587"/></radialGradient><radialGradient id="k" cx="159.3%" cy="-44.72%" r="313.1%"><stop offset=".09" stop-color="#fff44f"/><stop offset=".63" stop-color="#ff980e"/></radialGradient><linearGradient id="a" x1="87.25%" y1="15.5%" x2="9.4%" y2="93.1%"><stop offset=".05" stop-color="#fff44f"/><stop offset=".37" stop-color="#ff980e"/><stop offset=".53" stop-color="#ff3647"/><stop offset=".7" stop-color="#e31587"/></linearGradient><linearGradient id="l" x1="80%" y1="14%" x2="18%" y2="84%"><stop offset=".17" stop-color="#fff44f" stop-opacity=".8"/><stop offset=".6" stop-color="#fff44f" stop-opacity="0"/></linearGradient></defs><path d="M478.711 166.353c-10.445-25.124-31.6-52.248-48.212-60.821 13.52 26.505 21.345 53.093 24.335 72.936 0 .039.015.136.047.4C427.706 111.135 381.627 83.823 344 24.355c-1.9-3.007-3.805-6.022-5.661-9.2a73.716 73.716 0 01-2.646-4.972A43.7 43.7 0 01332.1.677a.626.626 0 00-.546-.644.818.818 0 00-.451 0c-.034.012-.084.051-.12.065-.053.021-.12.069-.176.1.027-.036.083-.117.1-.136-60.37 35.356-80.85 100.761-82.732 133.484a120.249 120.249 0 00-66.142 25.488 71.355 71.355 0 00-6.225-4.7 111.338 111.338 0 01-.674-58.732c-24.688 11.241-43.89 29.01-57.85 44.7h-.111c-9.527-12.067-8.855-51.873-8.312-60.184-.114-.515-7.107 3.63-8.023 4.255a175.073 175.073 0 00-23.486 20.12 210.478 210.478 0 00-22.442 26.913c0 .012-.007.026-.011.038 0-.013.007-.026.011-.038a202.838 202.838 0 00-32.247 72.805c-.115.521-.212 1.061-.324 1.586-.452 2.116-2.08 12.7-2.365 15-.022.177-.032.347-.053.524a229.066 229.066 0 00-3.9 33.157c0 .41-.025.816-.025 1.227C16 388.418 123.6 496 256.324 496c118.865 0 217.56-86.288 236.882-199.63.407-3.076.733-6.168 1.092-9.271 4.777-41.21-.53-84.525-15.587-120.746zM201.716 354.447c1.124.537 2.18 1.124 3.334 1.639.048.033.114.07.163.1a126.191 126.191 0 01-3.497-1.739zm55.053-144.93zm198.131-30.59l-.032-.233c.012.085.027.174.04.259z" fill="url(#a)"/><path d="M478.711 166.353c-10.445-25.124-31.6-52.248-48.212-60.821 13.52 26.505 21.345 53.093 24.335 72.936 0-.058.011.048.036.226.012.085.027.174.04.259 22.675 61.47 10.322 123.978-7.479 162.175-27.539 59.1-94.215 119.67-198.576 116.716C136.1 454.651 36.766 370.988 18.223 261.41c-3.379-17.28 0-26.054 1.7-40.084-2.071 10.816-2.86 13.94-3.9 33.157 0 .41-.025.816-.025 1.227C16 388.418 123.6 496 256.324 496c118.865 0 217.56-86.288 236.882-199.63.407-3.076.733-6.168 1.092-9.271 4.777-41.21-.53-84.525-15.587-120.746z" fill="url(#b)"/><path d="M478.711 166.353c-10.445-25.124-31.6-52.248-48.212-60.821 13.52 26.505 21.345 53.093 24.335 72.936 0-.058.011.048.036.226.012.085.027.174.04.259 22.675 61.47 10.322 123.978-7.479 162.175-27.539 59.1-94.215 119.67-198.576 116.716C136.1 454.651 36.766 370.988 18.223 261.41c-3.379-17.28 0-26.054 1.7-40.084-2.071 10.816-2.86 13.94-3.9 33.157 0 .41-.025.816-.025 1.227C16 388.418 123.6 496 256.324 496c118.865 0 217.56-86.288 236.882-199.63.407-3.076.733-6.168 1.092-9.271 4.777-41.21-.53-84.525-15.587-120.746z" fill="url(#c)"/><path d="M361.922 194.6c.524.368 1 .734 1.493 1.1a130.706 130.706 0 00-22.31-29.112C266.4 91.892 321.516 4.626 330.811.194c.027-.036.083-.117.1-.136-60.37 35.356-80.85 100.761-82.732 133.484 2.8-.194 5.592-.429 8.442-.429 45.051 0 84.289 24.77 105.301 61.487z" fill="url(#d)"/><path d="M256.772 209.514c-.393 5.978-21.514 26.593-28.9 26.593-68.339 0-79.432 41.335-79.432 41.335 3.027 34.81 27.261 63.475 56.611 78.643 1.339.692 2.694 1.317 4.05 1.935a132.768 132.768 0 007.059 2.886 106.743 106.743 0 0031.271 6.031c119.78 5.618 142.986-143.194 56.545-186.408 22.137-3.85 45.115 5.053 57.947 14.067-21.012-36.714-60.25-61.484-105.3-61.484-2.85 0-5.641.235-8.442.429a120.249 120.249 0 00-66.142 25.488c3.664 3.1 7.8 7.244 16.514 15.828 16.302 16.067 58.13 32.705 58.219 34.657z" fill="url(#e)"/><path d="M256.772 209.514c-.393 5.978-21.514 26.593-28.9 26.593-68.339 0-79.432 41.335-79.432 41.335 3.027 34.81 27.261 63.475 56.611 78.643 1.339.692 2.694 1.317 4.05 1.935a132.768 132.768 0 007.059 2.886 106.743 106.743 0 0031.271 6.031c119.78 5.618 142.986-143.194 56.545-186.408 22.137-3.85 45.115 5.053 57.947 14.067-21.012-36.714-60.25-61.484-105.3-61.484-2.85 0-5.641.235-8.442.429a120.249 120.249 0 00-66.142 25.488c3.664 3.1 7.8 7.244 16.514 15.828 16.302 16.067 58.13 32.705 58.219 34.657z" fill="url(#f)"/><path d="M170.829 151.036a244.042 244.042 0 014.981 3.3 111.338 111.338 0 01-.674-58.732c-24.688 11.241-43.89 29.01-57.85 44.7 1.155-.033 36.014-.66 53.543 10.732z" fill="url(#g)"/><path d="M18.223 261.41C36.766 370.988 136.1 454.651 248.855 457.844c104.361 2.954 171.037-57.62 198.576-116.716 17.8-38.2 30.154-100.7 7.479-162.175l-.008-.026-.032-.233c-.025-.178-.04-.284-.036-.226 0 .039.015.136.047.4 8.524 55.661-19.79 109.584-64.051 146.044l-.133.313c-86.245 70.223-168.774 42.368-185.484 30.966a144.108 144.108 0 01-3.5-1.743c-50.282-24.029-71.054-69.838-66.6-109.124-42.457 0-56.934-35.809-56.934-35.809s38.119-27.179 88.358-3.541c46.53 21.893 90.228 3.543 90.233 3.541-.089-1.952-41.917-18.59-58.223-34.656-8.713-8.584-12.85-12.723-16.514-15.828a71.355 71.355 0 00-6.225-4.7 282.929 282.929 0 00-4.981-3.3c-17.528-11.392-52.388-10.765-53.543-10.735h-.111c-9.527-12.067-8.855-51.873-8.312-60.184-.114-.515-7.107 3.63-8.023 4.255a175.073 175.073 0 00-23.486 20.12 210.478 210.478 0 00-22.442 26.919c0 .012-.007.026-.011.038 0-.013.007-.026.011-.038a202.838 202.838 0 00-32.247 72.805c-.115.521-8.65 37.842-4.44 57.199z" fill="url(#h)"/><path d="M341.105 166.587a130.706 130.706 0 0122.31 29.112c1.323.994 2.559 1.985 3.608 2.952 54.482 50.2 25.936 121.2 23.807 126.26 44.261-36.46 72.575-90.383 64.051-146.044C427.706 111.135 381.627 83.823 344 24.355c-1.9-3.007-3.805-6.022-5.661-9.2a73.716 73.716 0 01-2.646-4.972A43.7 43.7 0 01332.1.677a.626.626 0 00-.546-.644.818.818 0 00-.451 0c-.034.012-.084.051-.12.065-.053.021-.12.069-.176.1-9.291 4.428-64.407 91.694 10.298 166.389z" fill="url(#i)"/><path d="M367.023 198.651c-1.049-.967-2.285-1.958-3.608-2.952-.489-.368-.969-.734-1.493-1.1-12.832-9.014-35.81-17.917-57.947-14.067 86.441 43.214 63.235 192.026-56.545 186.408a106.743 106.743 0 01-31.271-6.031 134.51 134.51 0 01-7.059-2.886c-1.356-.618-2.711-1.243-4.05-1.935.048.033.114.07.163.1 16.71 11.4 99.239 39.257 185.484-30.966l.133-.313c2.129-5.054 30.675-76.057-23.807-126.258z" fill="url(#j)"/><path d="M148.439 277.443s11.093-41.335 79.432-41.335c7.388 0 28.509-20.615 28.9-26.593s-43.7 18.352-90.233-3.541c-50.239-23.638-88.358 3.541-88.358 3.541s14.477 35.809 56.934 35.809c-4.453 39.286 16.319 85.1 66.6 109.124 1.124.537 2.18 1.124 3.334 1.639-29.348-15.169-53.582-43.834-56.609-78.644z" fill="url(#k)"/><path d="M478.711 166.353c-10.445-25.124-31.6-52.248-48.212-60.821 13.52 26.505 21.345 53.093 24.335 72.936 0 .039.015.136.047.4C427.706 111.135 381.627 83.823 344 24.355c-1.9-3.007-3.805-6.022-5.661-9.2a73.716 73.716 0 01-2.646-4.972A43.7 43.7 0 01332.1.677a.626.626 0 00-.546-.644.818.818 0 00-.451 0c-.034.012-.084.051-.12.065-.053.021-.12.069-.176.1.027-.036.083-.117.1-.136-60.37 35.356-80.85 100.761-82.732 133.484 2.8-.194 5.592-.429 8.442-.429 45.053 0 84.291 24.77 105.3 61.484-12.832-9.014-35.81-17.917-57.947-14.067 86.441 43.214 63.235 192.026-56.545 186.408a106.743 106.743 0 01-31.271-6.031 134.51 134.51 0 01-7.059-2.886c-1.356-.618-2.711-1.243-4.05-1.935.048.033.114.07.163.1a144.108 144.108 0 01-3.5-1.743c1.124.537 2.18 1.124 3.334 1.639-29.35-15.168-53.584-43.833-56.611-78.643 0 0 11.093-41.335 79.432-41.335 7.388 0 28.509-20.615 28.9-26.593-.089-1.952-41.917-18.59-58.223-34.656-8.713-8.584-12.85-12.723-16.514-15.828a71.355 71.355 0 00-6.225-4.7 111.338 111.338 0 01-.674-58.732c-24.688 11.241-43.89 29.01-57.85 44.7h-.111c-9.527-12.067-8.855-51.873-8.312-60.184-.114-.515-7.107 3.63-8.023 4.255a175.073 175.073 0 00-23.486 20.12 210.478 210.478 0 00-22.435 26.916c0 .012-.007.026-.011.038 0-.013.007-.026.011-.038a202.838 202.838 0 00-32.247 72.805c-.115.521-.212 1.061-.324 1.586-.452 2.116-2.486 12.853-2.77 15.156-.022.177.021-.176 0 0a279.565 279.565 0 00-3.544 33.53c0 .41-.025.816-.025 1.227C16 388.418 123.6 496 256.324 496c118.865 0 217.56-86.288 236.882-199.63.407-3.076.733-6.168 1.092-9.271 4.777-41.21-.53-84.525-15.587-120.746zm-23.841 12.341c.012.085.027.174.04.259l-.008-.026-.032-.233z" fill="url(#l)"/></svg>
+                        </div>
+                        Firefox
+                    </a>
+
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/faceit-forecast/kklfhhdnabdnkgncmibfiaeeoghainpj"
+                       class="download-btn" target="_blank" rel="noopener">
+                        <div class="browser-icon">
+                            <?xml version="1.0" encoding="utf-8"?>
+                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                            <svg width="800px" height="800px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <defs>
+                                    <linearGradient id="linearGradient-1" gradientUnits="userSpaceOnUse" x1="63.3343" y1="757.83" x2="241.6165" y2="757.83" gradientTransform="matrix(1 0 0 1 -4.63 -580.8098)">
+                                        <stop  offset="0" style="stop-color:#0C59A4"/>
+                                        <stop  offset="1" style="stop-color:#114A8B"/>
+                                    </linearGradient>
+                                    <radialGradient id="radialGradient-1" cx="161.83" cy="788.4008" r="95.38" gradientTransform="matrix(0.9999 0 0 0.9498 -4.6217 -570.3868)" gradientUnits="userSpaceOnUse">
+                                        <stop  offset="0.72" style="stop-color:#000000;stop-opacity:0"/>
+                                        <stop  offset="0.95" style="stop-color:#000000;stop-opacity:0.53"/>
+                                        <stop  offset="1" style="stop-color:#000000"/>
+                                    </radialGradient>
+                                    <linearGradient id="linearGradient-2" gradientUnits="userSpaceOnUse" x1="157.4013" y1="680.5561" x2="46.0276" y2="801.8683" gradientTransform="matrix(1 0 0 1 -4.63 -580.8098)">
+                                        <stop  offset="0" style="stop-color:#1B9DE2"/>
+                                        <stop  offset="0.16" style="stop-color:#1595DF"/>
+                                        <stop  offset="0.67" style="stop-color:#0680D7"/>
+                                        <stop  offset="1" style="stop-color:#0078D4"/>
+                                    </linearGradient>
+                                    <radialGradient id="radialGradient-2" cx="-773.6357" cy="746.7146" r="143.24" gradientTransform="matrix(0.15 -0.9898 0.8 0.12 -410.7182 -656.3412)" gradientUnits="userSpaceOnUse">
+                                        <stop  offset="0.76" style="stop-color:#000000;stop-opacity:0"/>
+                                        <stop  offset="0.95" style="stop-color:#000000;stop-opacity:0.5"/>
+                                        <stop  offset="1" style="stop-color:#000000"/>
+                                    </radialGradient>
+                                    <radialGradient id="radialGradient-3" cx="230.5926" cy="-106.0381" r="202.4299" gradientTransform="matrix(-3.999750e-02 0.9998 -2.1299 -7.998414e-02 -190.7749 -191.6354)" gradientUnits="userSpaceOnUse">
+                                        <stop  offset="0" style="stop-color:#35C1F1"/>
+                                        <stop  offset="0.11" style="stop-color:#34C1ED"/>
+                                        <stop  offset="0.23" style="stop-color:#2FC2DF"/>
+                                        <stop  offset="0.31" style="stop-color:#2BC3D2"/>
+                                        <stop  offset="0.67" style="stop-color:#36C752"/>
+                                    </radialGradient>
+                                    <radialGradient id="radialGradient-4" cx="536.3567" cy="-117.7029" r="97.34" gradientTransform="matrix(0.28 0.9598 -0.78 0.23 -1.9279 -410.3179)" gradientUnits="userSpaceOnUse">
+                                        <stop  offset="0" style="stop-color:#66EB6E"/>
+                                        <stop  offset="1" style="stop-color:#66EB6E;stop-opacity:0"/>
+                                    </radialGradient>
+                                </defs>
+                                <g>
+                                    <path fill="url(#linearGradient-1)" d="M231,190.5c-3.4,1.8-6.9,3.4-10.5,4.7c-11.5,4.3-23.6,6.5-35.9,6.5c-47.3,0-88.5-32.5-88.5-74.3 c0.1-11.4,6.4-21.9,16.4-27.3c-42.8,1.8-53.8,46.4-53.8,72.5c0,73.9,68.1,81.4,82.8,81.4c7.9,0,19.8-2.3,27-4.6l1.3-0.4 c27.6-9.5,51-28.1,66.6-52.8c1.2-1.9,0.6-4.3-1.2-5.5C233.9,189.9,232.3,189.8,231,190.5z"/>
+                                    <path opacity="0.35" fill="url(#radialGradient-1)" enable-background="new    " d="M231,190.5c-3.4,1.8-6.9,3.4-10.5,4.7 c-11.5,4.3-23.6,6.5-35.9,6.5c-47.3,0-88.5-32.5-88.5-74.3c0.1-11.4,6.4-21.9,16.4-27.3c-42.8,1.8-53.8,46.4-53.8,72.5 c0,73.9,68.1,81.4,82.8,81.4c7.9,0,19.8-2.3,27-4.6l1.3-0.4c27.6-9.5,51-28.1,66.6-52.8c1.2-1.9,0.6-4.3-1.2-5.5 C233.9,189.9,232.3,189.8,231,190.5z"/>
+                                    <path fill="url(#linearGradient-2)" d="M105.7,241.4c-8.9-5.5-16.6-12.8-22.7-21.3c-26.3-36-18.4-86.5,17.6-112.8c3.8-2.7,7.7-5.2,11.9-7.2 c3.1-1.5,8.4-4.1,15.5-4c10.1,0.1,19.6,4.9,25.7,13c4,5.4,6.3,11.9,6.4,18.7c0-0.2,24.5-79.6-80-79.6c-43.9,0-80,41.7-80,78.2 c-0.2,19.3,4,38.5,12.1,56c27.6,58.8,94.8,87.6,156.4,67.1C147.5,256.1,124.5,253.2,105.7,241.4L105.7,241.4z"/>
+                                    <path opacity="0.41" fill="url(#radialGradient-2)" enable-background="new    " d="M105.7,241.4c-8.9-5.5-16.6-12.8-22.7-21.3 c-26.3-36-18.4-86.5,17.6-112.8c3.8-2.7,7.7-5.2,11.9-7.2c3.1-1.5,8.4-4.1,15.5-4c10.1,0.1,19.6,4.9,25.7,13 c4,5.4,6.3,11.9,6.4,18.7c0-0.2,24.5-79.6-80-79.6c-43.9,0-80,41.7-80,78.2c-0.2,19.3,4,38.5,12.1,56 c27.6,58.8,94.8,87.6,156.4,67.1C147.5,256.1,124.5,253.2,105.7,241.4L105.7,241.4z"/>
+                                    <path fill="url(#radialGradient-3)" d="M152.3,148.9c-0.8,1-3.3,2.5-3.3,5.7c0,2.6,1.7,5.1,4.7,7.2c14.4,10,41.5,8.7,41.6,8.7 c10.7,0,21.1-2.9,30.3-8.3c18.8-11,30.4-31.1,30.4-52.9c0.3-22.4-8-37.3-11.3-43.9C223.5,23.9,177.7,0,128,0C58,0,1,56.2,0,126.2 c0.5-36.5,36.8-66,80-66c3.5,0,23.5,0.3,42,10.1c16.3,8.6,24.9,18.9,30.8,29.2c6.2,10.7,7.3,24.1,7.3,29.5 C160.1,134.3,157.4,142.3,152.3,148.9z"/>
+                                    <path fill="url(#radialGradient-4)" d="M152.3,148.9c-0.8,1-3.3,2.5-3.3,5.7c0,2.6,1.7,5.1,4.7,7.2c14.4,10,41.5,8.7,41.6,8.7 c10.7,0,21.1-2.9,30.3-8.3c18.8-11,30.4-31.1,30.4-52.9c0.3-22.4-8-37.3-11.3-43.9C223.5,23.9,177.7,0,128,0C58,0,1,56.2,0,126.2 c0.5-36.5,36.8-66,80-66c3.5,0,23.5,0.3,42,10.1c16.3,8.6,24.9,18.9,30.8,29.2c6.2,10.7,7.3,24.1,7.3,29.5 C160.1,134.3,157.4,142.3,152.3,148.9z"/>
+                                </g>
+                            </svg>
+                        </div>
+                        Edge
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Features</h2>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Advanced Match History</h3>
+                        <p>Displays detailed player stats in match history, including HLTV rating, kills/deaths, KD and
+                            KR ratios, and ADR. Quick access to match scoreboards directly from history.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>New Elo Rankings</h3>
+                        <p>Adds extra rating levels for a more accurate reflection of player skill at higher ranks,
+                            expanding the standard 10-level Faceit system.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Extended In-Match Info</h3>
+                        <p>Shows extended info about teams and individual players in the match room, calculating the
+                            number of games and win percentage on each map.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Quick Position Setup</h3>
+                        <p>Configure custom messages for each CS2 map that will be automatically sent when the map is
+                            chosen during match selection.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Real-time Statistics</h3>
+                        <p>Stay updated with live data and comprehensive analytics to make informed decisions before and
+                            during matches.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Multi-Browser Support</h3>
+                        <p>Available for Chrome, Firefox, and Edge browsers with consistent functionality across all
+                            platforms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="support-section">
+            <div class="container">
+                <h2>Support the Project</h2>
+                <p class="subtitle">Help us continue developing and improving Faceit Forecast</p>
+
+                <div class="support-buttons">
+                    <a href="https://boosty.to/terraminer" class="support-btn" target="_blank" rel="noopener">
+                        <div class="support-icon">
+                            <?xml version="1.0" encoding="utf-8"?>
+                            <svg id="layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                 viewBox="0 0 235.6 292.2" style="enable-background:new 0 0 235.6 292.2; scale: 1.7"
+                                 xml:space="preserve">
+                                <style type="text/css">
+                                    .st0 {
+                                        fill: url(#SVGID_1_);
+                                    }
+                                </style>
+                                <g id="b_1_">
+                                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="145.0777"
+                                                    y1="76.148" x2="80.5868" y2="296.0785">
+                                        <stop offset="0" style="stop-color:#EF7829"/>
+                                        <stop offset="5.189538e-02" style="stop-color:#F07529"/>
+                                        <stop offset="0.3551" style="stop-color:#F0672B"/>
+                                        <stop offset="0.6673" style="stop-color:#F15E2C"/>
+                                        <stop offset="1" style="stop-color:#F15A2C"/>
+                                    </linearGradient>
+                                    <path class="st0" d="M44.3,164.5L76.9,51.6H127l-10.1,35c-0.1,0.2-0.2,0.4-0.3,0.6L90,179.6h24.8c-10.4,25.9-18.5,46.2-24.3,60.9
+                                        c-45.8-0.5-58.6-33.3-47.4-72.1 M90.7,240.6l60.4-86.9h-25.6l22.3-55.7c38.2,4,56.2,34.1,45.6,70.5
+                                        c-11.3,39.1-57.1,72.1-101.7,72.1C91.3,240.6,91,240.6,90.7,240.6z"/>
+                                </g>
+                                </svg>
+                        </div>
+                        Support on Boosty
+                    </a>
+
+                    <a href="https://www.buymeacoffee.com/terraminer" class="support-btn" target="_blank"
+                       rel="noopener">
+                        <div class="support-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="73" height="105" fill="none"
+                                 viewBox="0 0 73 105" style="scale: 1.2">
+                                <g clip-path="url(#a)">
+                                    <path fill="#0D0C22"
+                                          d="m7.67 24.425.073-.043.168-.05a.4.4 0 0 1-.24.093Zm-.03-.012a.142.142 0 0 0 .03-.007v.02a.06.06 0 0 1-.03-.013Z"/>
+                                    <path fill="#0D0C22"
+                                          d="M7.67 24.426h-.01v-.007l.01.007Zm-.99 7.487-.122-.07-.046-.025-.041-.044c.077.033.148.08.209.139Zm.78-7.324.119-.113.08-.044a.336.336 0 0 1-.2.157ZM37.49 97.38a.623.623 0 0 1 .242.186l-.075-.047c-.051-.047-.123-.102-.168-.14Zm-17.438-3.411c0-.107.052-.087.04.294 0-.03-.014-.062-.02-.091a6.642 6.642 0 0 0-.02-.203Zm1.808 3.411a.623.623 0 0 1 .243.186l-.075-.047c-.051-.047-.124-.102-.168-.14Zm27.91.811a.522.522 0 0 1 .256-.119 4.92 4.92 0 0 0-.205.102l-.05.017Zm2.763-2.631a.81.81 0 0 1 .101-.316 2.61 2.61 0 0 0-.098.31l-.003.006Z"/>
+                                    <path fill="#FD0"
+                                          d="M33.971 48.505c3.794 1.614 8.1 3.445 13.68 3.445a26.035 26.035 0 0 0 6.905-.946l-3.86 39.39a6.567 6.567 0 0 1-2.113 4.3 6.643 6.643 0 0 1-4.485 1.74s-5.472.282-7.298.282c-1.965 0-7.857-.283-7.857-.283a6.641 6.641 0 0 1-4.485-1.74 6.565 6.565 0 0 1-2.113-4.3l-4.133-43.527c1.847-.627 3.712-1.044 5.813-1.044 3.635 0 6.563 1.243 9.946 2.683Z"/>
+                                    <path fill="#0D0C22" d="m66.502 31.7-.065.06-.043.026a.656.656 0 0 1 .108-.086Z"/>
+                                    <path fill="#0D0C22"
+                                          d="m.366 28.064.581-2.914c.522-2.615 1.705-5.085 4.405-6.03.865-.303 1.847-.432 2.51-1.058.664-.626.86-1.598 1.014-2.499.284-1.654.551-3.31.842-4.961.252-1.42.45-3.014 1.106-4.317.852-1.749 2.621-2.771 4.38-3.448a25.333 25.333 0 0 1 2.756-.847C22.354.837 26.975.413 31.496.172A114.319 114.319 0 0 1 47.78.44c4.03.364 8.273.805 12.103 2.19 1.4.508 2.841 1.117 3.906 2.192 1.306 1.32 1.732 3.363.778 5.01-.678 1.17-1.826 1.996-3.043 2.543a24.79 24.79 0 0 1-4.942 1.599c-4.732 1.04-9.632 1.448-14.466 1.621-5.358.215-10.724.041-16.056-.52a91.9 91.9 0 0 1-3.949-.52c-1.547-.235-2.54-2.247-2.084-3.648.545-1.675 2.012-2.325 3.67-2.072.244.038.487.073.731.109l.177.025a89.937 89.937 0 0 0 5.175.503c2.611.18 5.23.264 7.847.268 2.572 0 5.145-.072 7.711-.24a98.59 98.59 0 0 0 3.504-.29c.53-.056 1.059-.114 1.587-.179l.504-.063.109-.016.521-.075a55.232 55.232 0 0 0 3.186-.565.48.48 0 0 0 .375-.464.474.474 0 0 0-.375-.465h-.02a51.964 51.964 0 0 0-2.758-.503c-.308-.048-.617-.095-.926-.141h-.009c-.578-.038-1.16-.142-1.735-.21a110.987 110.987 0 0 0-15.074-.528c-2.442.07-4.884.214-7.315.46a80.27 80.27 0 0 0-1.563.173c-.199.024-.399.052-.6.076l-.403.058a56.295 56.295 0 0 0-3.51.635c-1.726.372-3.941.494-4.708 2.373-.245.596-.356 1.258-.49 1.884l-.173.798a1.03 1.03 0 0 0-.755 6.794c.122.074.258.122.4.142h.012l.248.034.246.032a152.033 152.033 0 0 0 6.958.735 166.8 166.8 0 0 0 13.913.556 164.092 164.092 0 0 0 18.663-1.079c.67-.079 1.34-.164 2.012-.25-.52.066.378-.05.56-.076.426-.06.852-.121 1.278-.185 1.431-.213 2.853-.476 4.281-.707 1.727-.282 3.378-.14 4.94.707a7.16 7.16 0 0 1 2.973 3.065c.674 1.384.874 2.892 1.175 4.38.302 1.486.77 3.087.593 4.614-.382 3.295-2.7 5.974-6.033 6.573a171.921 171.921 0 0 1-9.45 1.412 175.66 175.66 0 0 1-40.463.232 2.144 2.144 0 0 0-1.735.602 2.117 2.117 0 0 0-.618 1.72l.315 3.048 1.907 18.478c.663 6.468 1.33 12.935 2.002 19.401l.568 5.463c.182 1.793.208 3.642.55 5.413.54 2.786 2.437 4.497 5.205 5.122 2.536.574 5.126.876 7.727.898 2.883.016 5.764-.111 8.647-.095 3.078.017 6.848-.266 9.223-2.543 2.088-2 2.376-5.132 2.66-7.84.38-3.585.755-7.17 1.127-10.754l2.089-19.93 1.351-12.895.067-.639c.162-1.538 1.257-3.044 2.984-2.966 1.477.065 3.157 1.314 2.984 2.966l-1.002 9.56-2.072 19.777c-.59 5.617-1.179 11.235-1.766 16.855-.114 1.076-.22 2.155-.34 3.231-.649 5.883-5.167 9.052-10.763 9.945-3.268.523-6.615.63-9.932.684-4.251.068-8.545.23-12.727-.536-6.196-1.13-10.846-5.243-11.509-11.624l-.568-5.527c-.63-6.095-1.26-12.19-1.887-18.286L9.447 49.048l-.942-9.128a2.112 2.112 0 0 0-.548-1.214 2.134 2.134 0 0 0-1.168-.65c-1.772-.342-3.466-.929-4.726-2.27C.056 33.653-.343 30.87.366 28.065Zm66.653 1.97c-.027-.013.022.217.044.324.004-.162-.004-.306-.044-.325Zm-.172 1.322c-.014-.01-.057.046-.101.114.067-.062.11-.109.102-.114h-.001Zm-.17.221c-.093.168-.06.103 0 0Zm-.339.274h-.008c0 .01-.016.02-.022.03l.032-.03h-.002Zm-59.467-.41c.636.602 1.596.882 2.543 1.022 10.629 1.568 21.412 2.362 32.157 2.011 7.69-.26 15.298-1.11 22.912-2.18.745-.104 1.554-.24 2.067-.786.966-1.031.492-3.108.24-4.354-.23-1.14-.67-2.662-2.036-2.825-2.132-.248-4.607.646-6.715.964a127.9 127.9 0 0 1-7.645.925c-10.915.989-22.014.835-32.88-.612a137.99 137.99 0 0 1-5.921-.922c-1.752-.312-3.695-.898-4.753.905-.726 1.23-.823 2.874-.71 4.262.034.605.3 1.174.742 1.59h-.001Z"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="a">
+                                        <path fill="#fff" d="M73 0H0v105h73z"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        Buy Me a Coffee
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/Faceit-Forecast/Forecast/issues" class="footer-link" target="_blank"
+                   rel="noopener">
+                    <div class="footer-icon">
+                        <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                                  fill="#fff"/>
+                        </svg>
+                    </div>
+                    Report Issues
+                </a>
+
+                <a href="#privacy" class="footer-link" id="privacy-link">
+                    <div class="footer-icon">
+                        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="scale: 1.4">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25 9C9.25 7.48122 10.4812 6.25 12 6.25C13.5188 6.25 14.75 7.48122 14.75 9C14.75 10.5188 13.5188 11.75 12 11.75C10.4812 11.75 9.25 10.5188 9.25 9ZM12 7.75C11.3096 7.75 10.75 8.30964 10.75 9C10.75 9.69036 11.3096 10.25 12 10.25C12.6904 10.25 13.25 9.69036 13.25 9C13.25 8.30964 12.6904 7.75 12 7.75Z" fill="#fff"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 12.25C10.8042 12.25 9.68461 12.4907 8.83616 12.915C8.03258 13.3168 7.25 14.0106 7.25 15L7.24987 15.0625C7.24834 15.5728 7.24576 16.4322 8.06023 17.0218C8.43818 17.2953 8.9369 17.4698 9.55469 17.581C10.1782 17.6932 10.9772 17.75 12 17.75C13.0228 17.75 13.8218 17.6932 14.4453 17.581C15.0631 17.4698 15.5618 17.2953 15.9398 17.0218C16.7542 16.4322 16.7517 15.5728 16.7501 15.0625L16.75 15C16.75 14.0106 15.9674 13.3168 15.1638 12.915C14.3154 12.4907 13.1958 12.25 12 12.25ZM8.75 15C8.75 14.8848 8.86285 14.5787 9.50698 14.2566C10.1063 13.957 10.9866 13.75 12 13.75C13.0134 13.75 13.8937 13.957 14.493 14.2566C15.1371 14.5787 15.25 14.8848 15.25 15C15.25 15.6045 15.2115 15.6972 15.0602 15.8067C14.9382 15.895 14.6869 16.0134 14.1797 16.1047C13.6782 16.1949 12.9772 16.25 12 16.25C11.0228 16.25 10.3218 16.1949 9.82031 16.1047C9.3131 16.0134 9.06182 15.895 8.93977 15.8067C8.78849 15.6972 8.75 15.6045 8.75 15Z" fill="#fff"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.72339 2.05112C10.1673 1.55658 11.0625 1.25 12 1.25C12.9375 1.25 13.8327 1.55658 15.2766 2.05112L16.004 2.30013C17.4854 2.8072 18.6286 3.19852 19.447 3.53099C19.8592 3.69846 20.2136 3.86067 20.499 4.02641C20.7737 4.1859 21.0492 4.38484 21.2364 4.65154C21.4214 4.91516 21.5171 5.23924 21.5772 5.55122C21.6397 5.87556 21.6774 6.26464 21.7017 6.71136C21.75 7.5984 21.75 8.81361 21.75 10.3898V11.9914C21.75 18.0924 17.142 21.0175 14.4017 22.2146L14.3746 22.2264C14.0348 22.3749 13.7154 22.5144 13.3484 22.6084C12.9609 22.7076 12.5493 22.75 12 22.75C11.4507 22.75 11.0391 22.7076 10.6516 22.6084C10.2846 22.5144 9.96523 22.3749 9.62543 22.2264L9.59833 22.2146C6.85803 21.0175 2.25 18.0924 2.25 11.9914V10.3899C2.25 8.81378 2.25 7.59836 2.2983 6.71136C2.32262 6.26464 2.36031 5.87556 2.42281 5.55122C2.48293 5.23924 2.5786 4.91516 2.76363 4.65154C2.95082 4.38484 3.22634 4.1859 3.50098 4.02641C3.78637 3.86067 4.14078 3.69846 4.55303 3.53099C5.3714 3.19852 6.51462 2.8072 7.99595 2.30014L8.72339 2.05112ZM12 2.75C11.3423 2.75 10.6951 2.96164 9.08062 3.5143L8.5078 3.71037C6.99521 4.22814 5.8921 4.60605 5.11759 4.92069C4.731 5.07774 4.4509 5.20935 4.25429 5.32353C4.15722 5.3799 4.09034 5.42642 4.04567 5.46273C4.0078 5.49351 3.99336 5.51095 3.99129 5.51349C3.98936 5.51663 3.97693 5.5374 3.95943 5.58654C3.93944 5.64265 3.91729 5.72309 3.89571 5.83506C3.85204 6.06169 3.81894 6.37301 3.79608 6.79292C3.75028 7.63411 3.75 8.80833 3.75 10.4167V11.9914C3.75 17.1665 7.6199 19.7135 10.1988 20.84C10.5703 21.0023 10.7848 21.0941 11.0236 21.1552C11.2517 21.2136 11.53 21.25 12 21.25C12.47 21.25 12.7483 21.2136 12.9764 21.1552C13.2152 21.0941 13.4297 21.0023 13.8012 20.84C16.3801 19.7135 20.25 17.1665 20.25 11.9914V10.4167C20.25 8.80833 20.2497 7.63411 20.2039 6.79292C20.1811 6.37301 20.148 6.06169 20.1043 5.83506C20.0827 5.72309 20.0606 5.64265 20.0406 5.58654C20.0231 5.53737 20.0106 5.5166 20.0087 5.51348C20.0066 5.51092 19.9922 5.49349 19.9543 5.46273C19.9097 5.42642 19.8428 5.3799 19.7457 5.32353C19.5491 5.20935 19.269 5.07774 18.8824 4.92069C18.1079 4.60605 17.0048 4.22814 15.4922 3.71037L14.9194 3.5143C13.3049 2.96164 12.6577 2.75 12 2.75Z" fill="#fff"/>
+                        </svg>
+                    </div>
+                    Privacy Policy
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Faceit Forecast. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Privacy Policy</h1>
+            <button class="close-modal" id="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="language-selector">
+                <select id="languageSelect" onchange="switchLanguage(this.value)">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                </select>
+            </div>
+
+            <div id="content-en" class="language-content">
+                <p><strong>Last updated:</strong> September 28, 2025</p>
+
+                <h2>1. Overview</h2>
+                <p><strong>Faceit Forecast</strong> is a browser extension that provides detailed statistics and analytics for
+                    FACEIT matches and players. Key features include:</p>
+                <ul>
+                    <li>Extended match statistics and win rates for teams</li>
+                    <li>Detailed player statistics displayed on user cards</li>
+                    <li>Enhanced Faceit Skill Levels with detailed elo breakdown</li>
+                    <li>Specific match history statistics (Score, HLTV 2.1 rating, K/D, K/R, ADR)</li>
+                    <li>Quick match information preview without following links</li>
+                    <li>Automated messaging for map selection</li>
+                </ul>
+                <p>This policy explains how the extension handles data while providing these features.</p>
+
+                <div class="highlight">
+                    <p><strong>Key Point:</strong> This extension does not collect, store, or process any personally
+                        identifiable information such as names, email addresses, browsing history, passwords, or personal files.
+                    </p>
+                </div>
+
+                <h2>2. Data We Do NOT Collect</h2>
+                <ul>
+                    <li>Personal identification information (names, emails, phone numbers)</li>
+                    <li>Browsing history or website visits</li>
+                    <li>Passwords or login credentials</li>
+                    <li>Personal files or documents</li>
+                    <li>Location data beyond what's automatically included in HTTP requests</li>
+                </ul>
+
+                <h2>3. External Services Communication</h2>
+                <p>The extension communicates with two external services to provide its functionality:</p>
+
+                <h3>3.1. Developer Analytics Server</h3>
+                <ul>
+                    <li><strong>Service:</strong> <code>forecast.dargen.dev</code></li>
+                    <li><strong>Purpose:</strong> Receives lightweight "ping" requests to measure active user count in real-time
+                    </li>
+                    <li><strong>Data sent:</strong> Anonymous usage ping (no personal information)</li>
+                    <li><strong>Frequency:</strong> Periodic anonymous requests</li>
+                </ul>
+
+                <h3>3.2. FACEIT Public API</h3>
+                <ul>
+                    <li><strong>Service:</strong> <code>open.faceit.com</code></li>
+                    <li><strong>Purpose:</strong> Fetches publicly available match and player statistics</li>
+                    <li><strong>Data sent:</strong> Requests for public game data only</li>
+                    <li><strong>Data received:</strong> Public match statistics and player performance data</li>
+                </ul>
+
+                <h2>4. Automatic Technical Information</h2>
+                <p>Like all internet communications, HTTP requests may automatically include standard technical information such
+                    as:</p>
+                <ul>
+                    <li>IP address (required for internet communication)</li>
+                    <li>Browser user-agent string</li>
+                    <li>Basic request headers</li>
+                </ul>
+                <div class="highlight">
+                    <p><strong>Important:</strong> This technical information may be temporarily stored in server logs for
+                        technical purposes and service reliability. It is not used to identify users and is not shared with
+                        third parties.</p>
+                </div>
+
+                <h2>5. Local Data Storage</h2>
+                <p>The extension may temporarily store data locally in your browser for performance optimization, including:</p>
+                <ul>
+                    <li>Cached FACEIT statistics (temporary, automatically cleared)</li>
+                    <li>Extension settings and preferences</li>
+                </ul>
+                <p>This data remains on your device and is not transmitted to external servers.</p>
+
+                <h2>6. Your Rights and Choices</h2>
+                <ul>
+                    <li><strong>Uninstall:</strong> You can remove the extension at any time through your browser's extension
+                        management page
+                    </li>
+                    <li><strong>Data Clearing:</strong> Uninstalling the extension removes all locally stored data</li>
+                    <li><strong>Opt-out:</strong> Simply uninstall the extension to stop all data processing</li>
+                </ul>
+
+                <h2>7. Third-Party Services</h2>
+                <p>This extension relies on FACEIT's public API. Please review <a href="https://corporate.faceit.com/privacy/"
+                                                                                  target="_blank">FACEIT's Privacy Policy</a>
+                    for information about their data practices.</p>
+
+                <h2>8. Changes to This Policy</h2>
+                <p>We may update this privacy policy occasionally. Any changes will be reflected by updating the "Last updated"
+                    date at the top of this page. Continued use of the extension after changes constitutes acceptance of the
+                    updated policy.</p>
+
+                <h2>9. Legal Basis (EU Users)</h2>
+                <p>For users in the European Union, our legal basis for processing data is legitimate interest in providing
+                    extension functionality and measuring usage statistics anonymously.</p>
+
+                <h2>10. Data Security</h2>
+                <p>While we don't collect personal data, we implement appropriate technical measures to secure any data
+                    transmissions and ensure the extension operates safely within your browser's security model.</p>
+
+                <div class="contact-info">
+                    <h2>11. Contact Information</h2>
+                    <p>If you have questions, concerns, or requests regarding this privacy policy:</p>
+                    <p><strong>Email:</strong> <a href="mailto:forecast.extension@gmail.com">forecast.extension@gmail.com</a>
+                    </p>
+                    <p><strong>Response time:</strong> We aim to respond within 72 hours.</p>
+                </div>
+
+                <hr>
+                <p><small>This privacy policy applies to your use of the Faceit Forecast extension.</small></p>
+            </div>
+
+            <div id="content-ru" class="language-content hidden">
+                <p><strong>Последнее обновление:</strong> 28 сентября 2025</p>
+
+                <h2>1. Обзор</h2>
+                <p><strong>Faceit Forecast</strong> — это расширение для браузера, которое предоставляет подробную статистику и
+                    аналитику для матчей и игроков FACEIT. Основные функции включают:</p>
+                <ul>
+                    <li>Расширенная статистика матчей и процент побед команд</li>
+                    <li>Детальная статистика игроков, отображаемая на карточках пользователей</li>
+                    <li>Расширенные уровни Faceit с подробной разбивкой по elo</li>
+                    <li>Конкретная статистика истории матчей (Счет, рейтинг HLTV 2.1, K/D, K/R, ADR)</li>
+                    <li>Быстрый просмотр информации о матче без перехода по ссылкам</li>
+                    <li>Автоматическая отправка сообщений при выборе карт</li>
+                </ul>
+                <p>Данная политика объясняет, как расширение обрабатывает данные при предоставлении этих функций.</p>
+
+                <div class="highlight">
+                    <p><strong>Ключевой момент:</strong> Данное расширение не собирает, не хранит и не обрабатывает никакой
+                        персональной информации, такой как имена, адреса электронной почты, история браузера, пароли или личные
+                        файлы.</p>
+                </div>
+
+                <h2>2. Данные, которые мы НЕ собираем</h2>
+                <ul>
+                    <li>Персональную идентификационную информацию (имена, электронные адреса, номера телефонов)</li>
+                    <li>Историю браузера или посещения веб-сайтов</li>
+                    <li>Пароли или учетные данные для входа</li>
+                    <li>Личные файлы или документы</li>
+                    <li>Данные о местоположении, кроме автоматически включаемых в HTTP-запросы</li>
+                </ul>
+
+                <h2>3. Связь с внешними сервисами</h2>
+                <p>Расширение взаимодействует с двумя внешними сервисами для обеспечения своей функциональности:</p>
+
+                <h3>3.1. Сервер аналитики разработчика</h3>
+                <ul>
+                    <li><strong>Сервис:</strong> <code>forecast.dargen.dev</code></li>
+                    <li><strong>Цель:</strong> Получение легких "ping" запросов для измерения количества активных пользователей
+                        в реальном времени
+                    </li>
+                    <li><strong>Отправляемые данные:</strong> Анонимный пинг использования (никакой личной информации)</li>
+                    <li><strong>Частота:</strong> Периодические анонимные запросы</li>
+                </ul>
+
+                <h3>3.2. Публичный API FACEIT</h3>
+                <ul>
+                    <li><strong>Сервис:</strong> <code>open.faceit.com</code></li>
+                    <li><strong>Цель:</strong> Получение публично доступной статистики матчей и игроков</li>
+                    <li><strong>Отправляемые данные:</strong> Запросы только публичных игровых данных</li>
+                    <li><strong>Получаемые данные:</strong> Публичная статистика матчей и данные о производительности игроков
+                    </li>
+                </ul>
+
+                <h2>4. Автоматическая техническая информация</h2>
+                <p>Как и во всех интернет-соединениях, HTTP-запросы могут автоматически включать стандартную техническую
+                    информацию, такую как:</p>
+                <ul>
+                    <li>IP-адрес (необходим для интернет-соединения)</li>
+                    <li>Строка user-agent браузера</li>
+                    <li>Базовые заголовки запросов</li>
+                </ul>
+                <div class="highlight">
+                    <p><strong>Важно:</strong> Эта техническая информация может временно сохраняться в логах сервера для
+                        технических целей и обеспечения надежности сервиса. Она не используется для идентификации пользователей
+                        и не передается третьим лицам.</p>
+                </div>
+
+                <h2>5. Локальное хранение данных</h2>
+                <p>Расширение может временно хранить данные локально в вашем браузере для оптимизации производительности,
+                    включая:</p>
+                <ul>
+                    <li>Кэшированная статистика FACEIT (временная, автоматически очищается)</li>
+                    <li>Настройки и предпочтения расширения</li>
+                </ul>
+                <p>Эти данные остаются на вашем устройстве и не передаются на внешние серверы.</p>
+
+                <h2>6. Ваши права и варианты выбора</h2>
+                <ul>
+                    <li><strong>Удаление:</strong> Вы можете удалить расширение в любое время через страницу управления
+                        расширениями браузера
+                    </li>
+                    <li><strong>Очистка данных:</strong> Удаление расширения удаляет все локально сохраненные данные</li>
+                    <li><strong>Отказ:</strong> Просто удалите расширение, чтобы прекратить всю обработку данных</li>
+                </ul>
+
+                <h2>7. Сторонние сервисы</h2>
+                <p>Это расширение использует публичный API FACEIT. Пожалуйста, ознакомьтесь с <a
+                        href="https://corporate.faceit.com/privacy/" target="_blank">Политикой конфиденциальности FACEIT</a> для
+                    получения информации об их методах обработки данных.</p>
+
+                <h2>8. Изменения в данной политике</h2>
+                <p>Мы можем периодически обновлять данную политику конфиденциальности. Любые изменения будут отражены путем
+                    обновления даты "Последнее обновление" в верхней части страницы. Продолжение использования расширения после
+                    изменений означает принятие обновленной политики.</p>
+
+                <h2>9. Правовая основа (для пользователей ЕС)</h2>
+                <p>Для пользователей в Европейском Союзе наша правовая основа для обработки данных — законный интерес в
+                    предоставлении функциональности расширения и анонимном измерении статистики использования.</p>
+
+                <h2>10. Безопасность данных</h2>
+                <p>Хотя мы не собираем личные данные, мы применяем соответствующие технические меры для обеспечения безопасности
+                    любых передач данных и гарантируем, что расширение работает безопасно в рамках модели безопасности вашего
+                    браузера.</p>
+
+                <div class="contact-info">
+                    <h2>11. Контактная информация</h2>
+                    <p>Если у вас есть вопросы или замечания по поводу данной политики конфиденциальности:</p>
+                    <p><strong>Email:</strong> <a href="mailto:forecast.extension@gmail.com">forecast.extension@gmail.com</a>
+                    </p>
+                    <p><strong>Время ответа:</strong> Мы стремимся отвечать в течение 72 часов.</p>
+                </div>
+
+                <hr>
+                <p><small>Данная политика конфиденциальности применяется при использовании расширения Faceit Forecast.</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.radius = 2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+
+            this.x = Math.max(0, Math.min(width, this.x));
+            this.y = Math.max(0, Math.min(height, this.y));
+        }
+
+        draw() {
+            ctx.fillStyle = '#cccccc';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    const particles = [];
+    const particleCount = 80;
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function drawConnections() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 150) {
+                    const opacity = (1 - distance / 150) * 0.5;
+                    ctx.strokeStyle = `rgba(200, 200, 200, ${opacity})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.fillStyle = '#161616';
+        ctx.fillRect(0, 0, width, height);
+
+        drawConnections();
+
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Online counter
+    async function startOnlineUpdater() {
+        function animateValue(element, start, end, duration = 600) {
+            if (element.animationTimer) {
+                cancelAnimationFrame(element.animationTimer);
+            }
+            const range = end - start;
+            const startTime = Date.now();
+
+            function updateCounter() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = start + (range * easeProgress);
+                element.textContent = Math.round(current);
+                if (progress < 1) {
+                    element.animationTimer = requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = end;
+                    delete element.animationTimer;
+                }
+            }
+
+            updateCounter();
+        }
+
+        async function updateOnline() {
+            let onlineElement = document.getElementById("online");
+            if (onlineElement) {
+                try {
+                    const res = await fetch(`https://forecast.dargen.dev/session/online`);
+                    if (!res.ok) throw new Error(`Error on fetching online: ${res.statusText}`);
+                    let online = await res.json();
+                    const currentValue = parseInt(onlineElement.textContent) || 0;
+                    const newValue = online.online;
+                    if (currentValue !== newValue) {
+                        animateValue(onlineElement, currentValue, newValue);
+                    }
+                } catch (error) {
+                    console.error('Failed to update online count:', error);
+                }
+            }
+        }
+
+        await updateOnline();
+        setInterval(async () => {
+            await updateOnline();
+        }, 1000 * 30);
+    }
+
+    startOnlineUpdater();
+
+    // Modal functionality
+    const modal = document.getElementById('privacy-modal');
+    const privacyLink = document.getElementById('privacy-link');
+    const closeModal = document.getElementById('close-modal');
+
+    function openModal() {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        // Update URL without page reload
+        history.pushState({modal: 'privacy'}, '', '#privacy');
+    }
+
+    function closeModalFunc() {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+        // Remove hash from URL
+        if (window.location.hash === '#privacy') {
+            history.pushState('', document.title, window.location.pathname);
+        }
+    }
+
+    privacyLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+    });
+
+    closeModal.addEventListener('click', closeModalFunc);
+
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModalFunc();
+        }
+    });
+
+    // Check if URL has #privacy on page load
+    window.addEventListener('load', function() {
+        if (window.location.hash === '#privacy') {
+            openModal();
+        }
+
+        // Load saved language preference
+        const savedLang = localStorage.getItem('preferred-language') || 'en';
+        document.getElementById('languageSelect').value = savedLang;
+        switchLanguage(savedLang);
+    });
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function(e) {
+        if (window.location.hash === '#privacy') {
+            openModal();
+        } else {
+            closeModalFunc();
+        }
+    });
+
+    // Language switcher
+    function switchLanguage(lang) {
+        const contents = document.querySelectorAll('.language-content');
+        contents.forEach(content => content.classList.add('hidden'));
+
+        const selectedContent = document.getElementById(`content-${lang}`);
+        if (selectedContent) {
+            selectedContent.classList.remove('hidden');
+        }
+
+        localStorage.setItem('preferred-language', lang);
+    }
+
+    // ESC key to close modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModalFunc();
+        }
+    });
+</script>
+</body>
+</html>
