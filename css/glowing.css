@@ -1,0 +1,64 @@
+.glow-effect {
+    position: relative;
+    z-index: 1;
+}
+
+.glow-effect::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--glow-size, 4px));
+    left: calc(-1 * var(--glow-size, 4px));
+    right: calc(-1 * var(--glow-size, 4px));
+    bottom: calc(-1 * var(--glow-size, 4px));
+    background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
+    border-radius: inherit;
+    z-index: -2;
+    opacity: 0;
+    filter: blur(var(--glow-blur, 5px));
+    transition: opacity 0.3s;
+}
+
+.glow-effect::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-base, #2a2a2a);
+    border-radius: inherit;
+    z-index: -1;
+    transition: background-color 0.3s;
+}
+
+.glow-static::before {
+    opacity: var(--glow-opacity, 0.8);
+    animation: 3s spin linear infinite;
+}
+
+.glow-hover:hover::before {
+    opacity: var(--glow-opacity, 1);
+    animation: 3s spin linear infinite;
+}
+
+.glow-hover:hover::after {
+    background-color: var(--bg-hover, #3a3a3a);
+}
+
+.glow-weak {
+    --glow-size: 3px;
+    --glow-blur: 3px;
+    --glow-opacity: 0.5;
+}
+
+.glow-medium {
+    --glow-size: 4px;
+    --glow-blur: 5px;
+    --glow-opacity: 0.8;
+}
+
+.glow-strong {
+    --glow-size: 4px;
+    --glow-blur: 5px;
+    --glow-opacity: 1;
+}

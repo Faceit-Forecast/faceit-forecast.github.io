@@ -115,19 +115,6 @@ header {
     justify-content: center;
 }
 
-.logo-container::before {
-    content: "";
-    position: absolute;
-    width: 66px;
-    height: 66px;
-    background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
-    border-radius: 12px;
-    z-index: -1;
-    animation: 3s spin linear infinite;
-    filter: blur(3px);
-    opacity: 0.8;
-}
-
 .logo-img {
     width: 64px;
     height: 64px;
@@ -351,7 +338,7 @@ header {
     flex-wrap: wrap;
 }
 
-.support-btn {
+.btn-primary {
     position: relative;
     display: flex;
     align-items: center;
@@ -367,45 +354,8 @@ header {
     transition: all 0.3s ease;
 }
 
-.support-btn::before {
-    content: "";
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
-    border-radius: 10px;
-    z-index: -2;
-    opacity: 0;
-    filter: blur(3px);
-    transition: opacity 0.3s;
-}
-
-.support-btn::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #2a2a2a;
-    border-radius: 10px;
-    z-index: -1;
-    transition: background-color 0.3s;
-}
-
-.support-btn:hover {
+.btn-primary:hover {
     transform: translateY(-2px);
-}
-
-.support-btn:hover::before {
-    opacity: 1;
-    animation: 3s spin linear infinite;
-}
-
-.support-btn:hover::after {
-    background-color: #3a3a3a;
 }
 
 .support-icon {
@@ -426,7 +376,7 @@ header {
     margin-top: 60px;
 }
 
-.footer-link {
+.btn-text {
     position: relative;
     display: flex;
     align-items: center;
@@ -443,45 +393,8 @@ header {
     cursor: pointer;
 }
 
-.footer-link::before {
-    content: "";
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: conic-gradient(from var(--angle), #f50, #ff7300, #f90, #f50);
-    border-radius: 10px;
-    z-index: -2;
-    opacity: 0;
-    filter: blur(3px);
-    transition: opacity 0.3s;
-}
-
-.footer-link::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #2a2a2a;
-    border-radius: 10px;
-    z-index: -1;
-    transition: background-color 0.3s;
-}
-
-.footer-link:hover {
+.btn-text:hover {
     transform: translateY(-2px);
-}
-
-.footer-link:hover::before {
-    opacity: 1;
-    animation: 3s spin linear infinite;
-}
-
-.footer-link:hover::after {
-    background-color: #3a3a3a;
 }
 
 .footer-icon {
@@ -758,7 +671,7 @@ hr {
         align-items: center;
     }
 
-    .support-btn {
+    .btn-primary {
         width: 100%;
         max-width: 300px;
         justify-content: center;
@@ -769,7 +682,7 @@ hr {
         align-items: center;
     }
 
-    .footer-link {
+    .btn-text {
         width: 100%;
         max-width: 300px;
         justify-content: center;
