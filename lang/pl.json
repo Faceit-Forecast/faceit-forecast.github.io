@@ -1,0 +1,122 @@
+{
+  "header": {
+    "online": "Online:"
+  },
+  "hero": {
+    "title": "FACEIT FORECAST",
+    "subtitle": "Wygodne rozszerzenie do szczegółowych statystyk Faceit"
+  },
+  "features": {
+    "title": "Możliwości",
+    "card1": {
+      "title": "Nowe rankingi Elo",
+      "desc": "Dodaje dodatkowe poziomy rankingowe dla dokładniejszego odzwierciedlenia umiejętności gracza na wysokich rangach, rozszerzając standardowy 10-poziomowy system Faceit."
+    },
+    "card2": {
+      "title": "Rozszerzona historia meczów",
+      "desc": "Szybki dostęp do tabel wyników meczów bezpośrednio z historii. Wyświetla szczegółowe statystyki graczy w meczu, w tym ranking HLTV, zabójstwa/śmierci, współczynniki KD i KR oraz ADR."
+    },
+    "card3": {
+      "title": "Szybki wybór pozycji",
+      "desc": "Skonfiguruj niestandardowe wiadomości, które będą automatycznie wysyłane przy wyborze mapy w pokoju meczowym."
+    },
+    "card4": {
+      "title": "Procent wygranych drużyn",
+      "desc": "Przeglądaj aktualny procent wygranych drużyn w pokoju meczowym, aby szybko ocenić siłę przeciwników."
+    },
+    "card5": {
+      "title": "Personalna statystyka graczy",
+      "desc": "Zobacz procent wygranych z ostatnich meczów każdego gracza bezpośrednio na jego karcie użytkownika w meczu."
+    },
+    "card6": {
+      "title": "Wsparcie wielu przeglądarek",
+      "desc": "Dostępne dla wielu przeglądarek, w tym: Chrome, Firefox i Edge z jednolitą funkcjonalnością."
+    }
+  },
+  "support": {
+    "title": "Wesprzyj projekt",
+    "subtitle": "Pomóż nam kontynuować rozwój Faceit Forecast",
+    "boosty": "Boosty",
+    "coffee": "Buy Me a Coffee"
+  },
+  "footer": {
+    "reportIssues": "Zgłoś problem",
+    "privacyPolicy": "Polityka prywatności",
+    "gmail": "Gmail",
+    "disclaimer": "Faceit Forecast został opracowany niezależnie i nie ma oficjalnego poparcia ani powiązania z FACEIT.",
+    "copyright": "© 2025 Faceit Forecast. Wszelkie prawa zastrzeżone."
+  },
+  "notification": {
+    "copied": "Skopiowano!"
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "lastUpdated": "<strong>Ostatnia aktualizacja:</strong> 15 października 2025",
+    "section1": {
+      "title": "1. Przegląd",
+      "intro": "<strong>Faceit Forecast</strong> to rozszerzenie przeglądarki, które dostarcza szczegółowych statystyk i analiz dla meczów i graczy FACEIT. Główne funkcje obejmują:",
+      "features": "<ul><li>Rozszerzone poziomy Faceit ze szczegółowym podziałem elo</li><li>Ulepszone statystyki meczów i procenty wygranych drużyn</li><li>Szczegółowe statystyki graczy wyświetlane na kartach użytkowników</li><li>Konkretne statystyki historii meczów (Wynik, ranking HLTV 2.1, K/D, K/R, ADR)</li><li>Szybki podgląd informacji o meczu bez przechodzenia przez linki</li><li>Automatyczne wysyłanie wiadomości przy wyborze map</li></ul>",
+      "policy": "Ta polityka wyjaśnia, jak rozszerzenie przetwarza dane podczas dostarczania tych funkcji.",
+      "highlight": "<strong>Kluczowa kwestia:</strong> To rozszerzenie nie gromadzi, nie przechowuje ani nie przetwarza żadnych danych osobowych, takich jak imiona, adresy e-mail, historia przeglądania, hasła lub pliki osobiste."
+    },
+    "section2": {
+      "title": "2. Dane, których NIE gromadzimy",
+      "content": "<ul><li>Danych osobowych umożliwiających identyfikację (imiona, adresy e-mail, numery telefonów)</li><li>Historii przeglądarki lub odwiedzin stron internetowych</li><li>Haseł lub danych logowania</li><li>Plików osobistych lub dokumentów</li><li>Danych o lokalizacji, z wyjątkiem tych automatycznie uwzględnianych w żądaniach HTTP</li></ul>"
+    },
+    "section3": {
+      "title": "3. Komunikacja z usługami zewnętrznymi",
+      "intro": "Rozszerzenie współdziała z dwoma usługami zewnętrznymi w celu zapewnienia swojej funkcjonalności:",
+      "sub1": {
+        "title": "3.1. Serwer analityczny dewelopera",
+        "content": "<ul><li><strong>Usługa:</strong> <code>forecast.dargen.dev</code></li><li><strong>Cel:</strong> Usługa do zbierania i przetwarzania anonimowych analiz, na przykład do liczenia aktywnych użytkowników i monitorowania statusu online</li></ul>"
+      },
+      "sub2": {
+        "title": "3.2. Publiczne API FACEIT",
+        "content": "<ul><li><strong>Usługa:</strong> <code>open.faceit.com</code></li><li><strong>Cel:</strong> Dostęp do publicznych statystyk meczów i graczy w celu analizy i wyświetlania informacji o grze</li></ul>"
+      }
+    },
+    "section4": {
+      "title": "4. Automatyczne informacje techniczne",
+      "intro": "Podobnie jak w przypadku wszystkich połączeń internetowych, żądania HTTP mogą automatycznie zawierać standardowe informacje techniczne, takie jak:",
+      "list": "<ul><li>Adres IP (wymagany do połączenia internetowego)</li><li>Ciąg user-agent przeglądarki</li><li>Podstawowe nagłówki żądań</li></ul>",
+      "highlight": "<strong>Ważne:</strong> Te informacje techniczne mogą być tymczasowo przechowywane w logach serwera w celach technicznych i zapewnienia niezawodności usługi. Nie są wykorzystywane do identyfikacji użytkowników i nie są udostępniane osobom trzecim."
+    },
+    "section5": {
+      "title": "5. Lokalne przechowywanie danych",
+      "intro": "Rozszerzenie może tymczasowo przechowywać dane lokalnie w przeglądarce w celu optymalizacji wydajności, w tym:",
+      "list": "<ul><li>Buforowane statystyki FACEIT (tymczasowe, automatycznie usuwane)</li><li>Ustawienia i preferencje rozszerzenia</li></ul>",
+      "note": "Te dane pozostają na Twoim urządzeniu i nie są przesyłane na zewnętrzne serwery."
+    },
+    "section6": {
+      "title": "6. Twoje prawa i wybory",
+      "content": "<ul><li><strong>Usunięcie:</strong> Możesz usunąć rozszerzenie w dowolnym momencie za pośrednictwem strony zarządzania rozszerzeniami przeglądarki</li><li><strong>Czyszczenie danych:</strong> Usunięcie rozszerzenia usuwa wszystkie dane przechowywane lokalnie</li><li><strong>Rezygnacja:</strong> Po prostu usuń rozszerzenie, aby zatrzymać całe przetwarzanie danych</li></ul>"
+    },
+    "section7": {
+      "title": "7. Usługi stron trzecich",
+      "intro": "To rozszerzenie wykorzystuje publiczne API FACEIT. Zapoznaj się z <a href=\"https://corporate.faceit.com/privacy/\" target=\"_blank\">Polityką prywatności FACEIT</a>, aby uzyskać informacje o ich praktykach w zakresie przetwarzania danych.",
+      "sub1": {
+        "title": "7.1. Reklama i integracje partnerskie",
+        "content": "<ul><li>Rozszerzenie może wyświetlać opcjonalne banery reklamowe partnerów w celu wsparcia rozwoju projektu. Te banery nie gromadzą żadnych danych osobowych, nie śledzą użytkowników i mogą być wyłączone w dowolnym momencie przez ustawienia rozszerzenia.</li></ul>"
+      }
+    },
+    "section8": {
+      "title": "8. Zmiany w tej polityce",
+      "content": "Możemy okresowo aktualizować tę politykę prywatności. Wszelkie zmiany zostaną odzwierciedlone poprzez zaktualizowanie daty \"Ostatnia aktualizacja\" na górze strony. Kontynuowanie korzystania z rozszerzenia po zmianach oznacza akceptację zaktualizowanej polityki."
+    },
+    "section9": {
+      "title": "9. Podstawa prawna (dla użytkowników z UE)",
+      "content": "Dla użytkowników w Unii Europejskiej naszą podstawą prawną do przetwarzania danych jest uzasadniony interes w zapewnianiu funkcjonalności rozszerzenia i anonimowym pomiarze statystyk użytkowania."
+    },
+    "section10": {
+      "title": "10. Bezpieczeństwo danych",
+      "content": "Chociaż nie gromadzimy danych osobowych, stosujemy odpowiednie środki techniczne w celu zapewnienia bezpieczeństwa wszelkich transmisji danych i gwarantujemy, że rozszerzenie działa bezpiecznie w ramach modelu bezpieczeństwa przeglądarki."
+    },
+    "section11": {
+      "title": "11. Informacje kontaktowe",
+      "intro": "Jeśli masz pytania lub uwagi dotyczące tej polityki prywatności:",
+      "email": "<strong>E-mail:</strong> <a href=\"mailto:forecast.extension@gmail.com\">forecast.extension@gmail.com</a>",
+      "response": "<strong>Czas odpowiedzi:</strong> Staramy się odpowiadać w ciągu 72 godzin."
+    },
+    "footer": "<small>Ta polityka prywatności ma zastosowanie podczas korzystania z rozszerzenia Faceit Forecast.</small>"
+  }
+}

@@ -19,22 +19,4 @@ function setupCopyButton() {
     }
 }
 
-function switchLanguage(lang) {
-    const contents = document.querySelectorAll('.language-content');
-    contents.forEach(content => content.classList.add('hidden'));
-
-    const selectedContent = document.getElementById(`content-${lang}`);
-    if (selectedContent) {
-        selectedContent.classList.remove('hidden');
-    }
-
-    localStorage.setItem('preferred-language', lang);
-}
-
 setupCopyButton();
-
-window.addEventListener('load', function () {
-    const savedLang = localStorage.getItem('preferred-language') || 'en';
-    document.getElementById('languageSelect').value = savedLang;
-    switchLanguage(savedLang);
-});

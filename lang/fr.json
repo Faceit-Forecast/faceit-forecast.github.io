@@ -1,0 +1,122 @@
+{
+  "header": {
+    "online": "En ligne :"
+  },
+  "hero": {
+    "title": "FACEIT FORECAST",
+    "subtitle": "Extension pratique pour des statistiques détaillées sur Faceit"
+  },
+  "features": {
+    "title": "Fonctionnalités",
+    "card1": {
+      "title": "Nouveaux classements Elo",
+      "desc": "Ajoute des niveaux de classement supplémentaires pour une représentation plus précise des compétences des joueurs aux rangs élevés, en étendant le système standard à 10 niveaux de Faceit."
+    },
+    "card2": {
+      "title": "Historique des matchs étendu",
+      "desc": "Accès rapide aux tableaux de scores des matchs directement depuis l'historique. Affiche des statistiques détaillées des joueurs dans les matchs, y compris la note HLTV, les kills/morts, les ratios KD et KR, ainsi que l'ADR."
+    },
+    "card3": {
+      "title": "Sélection rapide de position",
+      "desc": "Configurez des messages personnalisés qui seront automatiquement envoyés lors de la sélection d'une carte dans la salle de match."
+    },
+    "card4": {
+      "title": "Pourcentage de victoires des équipes",
+      "desc": "Consultez les pourcentages de victoires actuels des équipes dans la salle de match pour évaluer rapidement la force des adversaires."
+    },
+    "card5": {
+      "title": "Statistiques personnelles des joueurs",
+      "desc": "Consultez le pourcentage de victoires des derniers matchs de chaque joueur directement sur sa carte utilisateur dans le match."
+    },
+    "card6": {
+      "title": "Support multi-navigateurs",
+      "desc": "Disponible pour plusieurs navigateurs, notamment : Chrome, Firefox et Edge avec des fonctionnalités cohérentes."
+    }
+  },
+  "support": {
+    "title": "Soutenir le projet",
+    "subtitle": "Aidez-nous à continuer le développement de Faceit Forecast",
+    "boosty": "Boosty",
+    "coffee": "Buy Me a Coffee"
+  },
+  "footer": {
+    "reportIssues": "Signaler un problème",
+    "privacyPolicy": "Politique de confidentialité",
+    "gmail": "Gmail",
+    "disclaimer": "Faceit Forecast est développé de manière indépendante et n'a aucune approbation officielle ni affiliation avec FACEIT.",
+    "copyright": "© 2025 Faceit Forecast. Tous droits réservés."
+  },
+  "notification": {
+    "copied": "Copié !"
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "lastUpdated": "<strong>Dernière mise à jour :</strong> 15 octobre 2025",
+    "section1": {
+      "title": "1. Aperçu",
+      "intro": "<strong>Faceit Forecast</strong> est une extension de navigateur qui fournit des statistiques et des analyses détaillées pour les matchs et les joueurs FACEIT. Les principales fonctionnalités comprennent :",
+      "features": "<ul><li>Niveaux Faceit étendus avec répartition détaillée de l'elo</li><li>Statistiques de match améliorées et pourcentages de victoires des équipes</li><li>Statistiques détaillées des joueurs affichées sur les cartes utilisateur</li><li>Statistiques spécifiques de l'historique des matchs (Score, note HLTV 2.1, K/D, K/R, ADR)</li><li>Aperçu rapide des informations de match sans suivre les liens</li><li>Envoi automatique de messages lors de la sélection des cartes</li></ul>",
+      "policy": "Cette politique explique comment l'extension traite les données lors de la fourniture de ces fonctionnalités.",
+      "highlight": "<strong>Point clé :</strong> Cette extension ne collecte, ne stocke ni ne traite aucune information personnelle telle que les noms, adresses e-mail, historique de navigation, mots de passe ou fichiers personnels."
+    },
+    "section2": {
+      "title": "2. Données que nous NE collectons PAS",
+      "content": "<ul><li>Informations personnelles identifiables (noms, adresses e-mail, numéros de téléphone)</li><li>Historique du navigateur ou visites de sites Web</li><li>Mots de passe ou identifiants de connexion</li><li>Fichiers ou documents personnels</li><li>Données de localisation, à l'exception de celles automatiquement incluses dans les requêtes HTTP</li></ul>"
+    },
+    "section3": {
+      "title": "3. Communication avec les services externes",
+      "intro": "L'extension interagit avec deux services externes pour fournir ses fonctionnalités :",
+      "sub1": {
+        "title": "3.1. Serveur d'analyse du développeur",
+        "content": "<ul><li><strong>Service :</strong> <code>forecast.dargen.dev</code></li><li><strong>Objectif :</strong> Service de collecte et de traitement d'analyses anonymes, telles que le comptage des utilisateurs actifs et la surveillance du statut en ligne</li></ul>"
+      },
+      "sub2": {
+        "title": "3.2. API publique FACEIT",
+        "content": "<ul><li><strong>Service :</strong> <code>open.faceit.com</code></li><li><strong>Objectif :</strong> Accès aux statistiques publiques des matchs et des joueurs pour analyser et afficher les informations de jeu</li></ul>"
+      }
+    },
+    "section4": {
+      "title": "4. Informations techniques automatiques",
+      "intro": "Comme pour toutes les connexions Internet, les requêtes HTTP peuvent automatiquement inclure des informations techniques standard telles que :",
+      "list": "<ul><li>Adresse IP (nécessaire pour la connexion Internet)</li><li>Chaîne user-agent du navigateur</li><li>En-têtes de requête de base</li></ul>",
+      "highlight": "<strong>Important :</strong> Ces informations techniques peuvent être temporairement stockées dans les journaux du serveur à des fins techniques et de fiabilité du service. Elles ne sont pas utilisées pour identifier les utilisateurs et ne sont pas partagées avec des tiers."
+    },
+    "section5": {
+      "title": "5. Stockage local des données",
+      "intro": "L'extension peut stocker temporairement des données localement dans votre navigateur pour optimiser les performances, notamment :",
+      "list": "<ul><li>Statistiques FACEIT en cache (temporaires, automatiquement effacées)</li><li>Paramètres et préférences de l'extension</li></ul>",
+      "note": "Ces données restent sur votre appareil et ne sont pas transmises à des serveurs externes."
+    },
+    "section6": {
+      "title": "6. Vos droits et choix",
+      "content": "<ul><li><strong>Suppression :</strong> Vous pouvez supprimer l'extension à tout moment via la page de gestion des extensions de votre navigateur</li><li><strong>Effacement des données :</strong> La suppression de l'extension supprime toutes les données stockées localement</li><li><strong>Désactivation :</strong> Supprimez simplement l'extension pour arrêter tout traitement de données</li></ul>"
+    },
+    "section7": {
+      "title": "7. Services tiers",
+      "intro": "Cette extension utilise l'API publique FACEIT. Veuillez consulter la <a href=\"https://corporate.faceit.com/privacy/\" target=\"_blank\">Politique de confidentialité de FACEIT</a> pour obtenir des informations sur leurs pratiques de traitement des données.",
+      "sub1": {
+        "title": "7.1. Publicité et intégrations partenaires",
+        "content": "<ul><li>L'extension peut afficher des bannières publicitaires partenaires optionnelles pour soutenir le développement du projet. Ces bannières ne collectent aucune donnée personnelle, ne suivent pas les utilisateurs et peuvent être désactivées à tout moment via les paramètres de l'extension.</li></ul>"
+      }
+    },
+    "section8": {
+      "title": "8. Modifications de cette politique",
+      "content": "Nous pouvons mettre à jour périodiquement cette politique de confidentialité. Toute modification sera reflétée par la mise à jour de la date \"Dernière mise à jour\" en haut de la page. L'utilisation continue de l'extension après les modifications indique l'acceptation de la politique mise à jour."
+    },
+    "section9": {
+      "title": "9. Base juridique (pour les utilisateurs de l'UE)",
+      "content": "Pour les utilisateurs de l'Union européenne, notre base juridique pour le traitement des données est l'intérêt légitime à fournir les fonctionnalités de l'extension et à mesurer les statistiques d'utilisation anonymes."
+    },
+    "section10": {
+      "title": "10. Sécurité des données",
+      "content": "Bien que nous ne collections pas de données personnelles, nous appliquons des mesures techniques appropriées pour assurer la sécurité de toute transmission de données et garantir que l'extension fonctionne en toute sécurité dans le modèle de sécurité de votre navigateur."
+    },
+    "section11": {
+      "title": "11. Coordonnées",
+      "intro": "Si vous avez des questions ou des commentaires concernant cette politique de confidentialité :",
+      "email": "<strong>E-mail :</strong> <a href=\"mailto:forecast.extension@gmail.com\">forecast.extension@gmail.com</a>",
+      "response": "<strong>Délai de réponse :</strong> Nous nous efforçons de répondre dans les 72 heures."
+    },
+    "footer": "<small>Cette politique de confidentialité s'applique lors de l'utilisation de l'extension Faceit Forecast.</small>"
+  }
+}

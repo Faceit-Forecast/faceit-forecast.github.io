@@ -35,7 +35,7 @@ window.addEventListener('load', function () {
     }
 });
 
-window.addEventListener('popstate', function (e) {
+window.addEventListener('popstate', function (_) {
     if (window.location.hash === '#privacy') {
         openModal();
     } else {

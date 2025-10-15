@@ -1,0 +1,122 @@
+{
+  "header": {
+    "online": "Online:"
+  },
+  "hero": {
+    "title": "FACEIT FORECAST",
+    "subtitle": "Praktische Erweiterung für detaillierte Faceit-Statistiken"
+  },
+  "features": {
+    "title": "Funktionen",
+    "card1": {
+      "title": "Neue Elo-Bewertungen",
+      "desc": "Fügt zusätzliche Bewertungsstufen für eine genauere Darstellung der Spielerfähigkeiten auf hohen Rängen hinzu und erweitert das standardmäßige 10-stufige Faceit-System."
+    },
+    "card2": {
+      "title": "Erweiterte Match-Historie",
+      "desc": "Schneller Zugriff auf Match-Anzeigetafeln direkt aus der Historie. Zeigt detaillierte Spielerstatistiken in Matches an, einschließlich HLTV-Bewertung, Kills/Tode, KD- und KR-Verhältnisse sowie ADR."
+    },
+    "card3": {
+      "title": "Schnelle Positionsauswahl",
+      "desc": "Richten Sie benutzerdefinierte Nachrichten ein, die automatisch gesendet werden, wenn Sie eine Karte im Match-Raum auswählen."
+    },
+    "card4": {
+      "title": "Team-Gewinnrate",
+      "desc": "Sehen Sie aktuelle Team-Gewinnprozentsätze im Match-Raum, um die Stärke der Gegner schnell einzuschätzen."
+    },
+    "card5": {
+      "title": "Persönliche Spielerstatistiken",
+      "desc": "Sehen Sie die Gewinnrate der letzten Matches jedes Spielers direkt auf seiner Benutzerkarte im Match."
+    },
+    "card6": {
+      "title": "Multi-Browser-Unterstützung",
+      "desc": "Verfügbar für mehrere Browser, darunter: Chrome, Firefox und Edge mit konsistenter Funktionalität."
+    }
+  },
+  "support": {
+    "title": "Projekt unterstützen",
+    "subtitle": "Helfen Sie uns, Faceit Forecast weiterzuentwickeln",
+    "boosty": "Boosty",
+    "coffee": "Buy Me a Coffee"
+  },
+  "footer": {
+    "reportIssues": "Problem melden",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "gmail": "Gmail",
+    "disclaimer": "Faceit Forecast wurde unabhängig entwickelt und hat keine offizielle Unterstützung oder Verbindung mit FACEIT.",
+    "copyright": "© 2025 Faceit Forecast. Alle Rechte vorbehalten."
+  },
+  "notification": {
+    "copied": "Kopiert!"
+  },
+  "privacy": {
+    "title": "Datenschutzrichtlinie",
+    "lastUpdated": "<strong>Zuletzt aktualisiert:</strong> 15. Oktober 2025",
+    "section1": {
+      "title": "1. Übersicht",
+      "intro": "<strong>Faceit Forecast</strong> ist eine Browser-Erweiterung, die detaillierte Statistiken und Analysen für FACEIT-Matches und -Spieler bereitstellt. Zu den Hauptfunktionen gehören:",
+      "features": "<ul><li>Erweiterte Faceit-Stufen mit detaillierter Elo-Aufschlüsselung</li><li>Verbesserte Match-Statistiken und Team-Gewinnprozentsätze</li><li>Detaillierte Spielerstatistiken, die auf Benutzerkarten angezeigt werden</li><li>Spezifische Match-Historie-Statistiken (Punktzahl, HLTV 2.1-Bewertung, K/D, K/R, ADR)</li><li>Schnelle Match-Informationsvorschau ohne Links zu folgen</li><li>Automatisches Senden von Nachrichten bei der Kartenauswahl</li></ul>",
+      "policy": "Diese Richtlinie erklärt, wie die Erweiterung Daten bei der Bereitstellung dieser Funktionen verarbeitet.",
+      "highlight": "<strong>Wichtiger Punkt:</strong> Diese Erweiterung sammelt, speichert oder verarbeitet keine persönlichen Informationen wie Namen, E-Mail-Adressen, Browserverlauf, Passwörter oder persönliche Dateien."
+    },
+    "section2": {
+      "title": "2. Daten, die wir NICHT sammeln",
+      "content": "<ul><li>Personenbezogene identifizierbare Informationen (Namen, E-Mail-Adressen, Telefonnummern)</li><li>Browserverlauf oder Website-Besuche</li><li>Passwörter oder Anmeldedaten</li><li>Persönliche Dateien oder Dokumente</li><li>Standortdaten, außer denen, die automatisch in HTTP-Anfragen enthalten sind</li></ul>"
+    },
+    "section3": {
+      "title": "3. Kommunikation mit externen Diensten",
+      "intro": "Die Erweiterung interagiert mit zwei externen Diensten, um ihre Funktionalität bereitzustellen:",
+      "sub1": {
+        "title": "3.1. Entwickler-Analyseserver",
+        "content": "<ul><li><strong>Dienst:</strong> <code>forecast.dargen.dev</code></li><li><strong>Zweck:</strong> Dienst zum Sammeln und Verarbeiten anonymer Analysen, wie z. B. zum Zählen aktiver Benutzer und zur Überwachung des Online-Status</li></ul>"
+      },
+      "sub2": {
+        "title": "3.2. Öffentliche FACEIT-API",
+        "content": "<ul><li><strong>Dienst:</strong> <code>open.faceit.com</code></li><li><strong>Zweck:</strong> Zugriff auf öffentliche Match- und Spielerstatistiken zur Analyse und Anzeige von Spielinformationen</li></ul>"
+      }
+    },
+    "section4": {
+      "title": "4. Automatische technische Informationen",
+      "intro": "Wie bei allen Internetverbindungen können HTTP-Anfragen automatisch Standard-Technische Informationen enthalten, wie:",
+      "list": "<ul><li>IP-Adresse (für Internetverbindung erforderlich)</li><li>Browser-User-Agent-String</li><li>Grundlegende Anforderungsheader</li></ul>",
+      "highlight": "<strong>Wichtig:</strong> Diese technischen Informationen können vorübergehend in Serverprotokollen für technische Zwecke und Dienstzuverlässigkeit gespeichert werden. Sie werden nicht zur Identifizierung von Benutzern verwendet und nicht an Dritte weitergegeben."
+    },
+    "section5": {
+      "title": "5. Lokale Datenspeicherung",
+      "intro": "Die Erweiterung kann Daten vorübergehend lokal in Ihrem Browser speichern, um die Leistung zu optimieren, einschließlich:",
+      "list": "<ul><li>Zwischengespeicherte FACEIT-Statistiken (temporär, automatisch gelöscht)</li><li>Erweiterungseinstellungen und -präferenzen</li></ul>",
+      "note": "Diese Daten verbleiben auf Ihrem Gerät und werden nicht an externe Server übertragen."
+    },
+    "section6": {
+      "title": "6. Ihre Rechte und Wahlmöglichkeiten",
+      "content": "<ul><li><strong>Entfernung:</strong> Sie können die Erweiterung jederzeit über die Erweiterungsverwaltungsseite Ihres Browsers entfernen</li><li><strong>Datenlöschung:</strong> Das Entfernen der Erweiterung löscht alle lokal gespeicherten Daten</li><li><strong>Opt-out:</strong> Entfernen Sie einfach die Erweiterung, um die gesamte Datenverarbeitung zu beenden</li></ul>"
+    },
+    "section7": {
+      "title": "7. Drittanbieterdienste",
+      "intro": "Diese Erweiterung verwendet die öffentliche FACEIT-API. Bitte lesen Sie die <a href=\"https://corporate.faceit.com/privacy/\" target=\"_blank\">FACEIT-Datenschutzrichtlinie</a> für Informationen über deren Datenverarbeitungspraktiken.",
+      "sub1": {
+        "title": "7.1. Werbung und Partnerintegrationen",
+        "content": "<ul><li>Die Erweiterung kann optionale Partner-Werbebanner anzeigen, um die Projektentwicklung zu unterstützen. Diese Banner sammeln keine persönlichen Daten, verfolgen keine Benutzer und können jederzeit über die Erweiterungseinstellungen deaktiviert werden.</li></ul>"
+      }
+    },
+    "section8": {
+      "title": "8. Änderungen dieser Richtlinie",
+      "content": "Wir können diese Datenschutzrichtlinie regelmäßig aktualisieren. Alle Änderungen werden durch Aktualisierung des Datums \"Zuletzt aktualisiert\" oben auf der Seite wiedergegeben. Die fortgesetzte Nutzung der Erweiterung nach Änderungen bedeutet die Akzeptanz der aktualisierten Richtlinie."
+    },
+    "section9": {
+      "title": "9. Rechtsgrundlage (für EU-Nutzer)",
+      "content": "Für Nutzer in der Europäischen Union ist unsere Rechtsgrundlage für die Datenverarbeitung das berechtigte Interesse an der Bereitstellung der Erweiterungsfunktionalität und der Messung anonymer Nutzungsstatistiken."
+    },
+    "section10": {
+      "title": "10. Datensicherheit",
+      "content": "Obwohl wir keine persönlichen Daten sammeln, wenden wir angemessene technische Maßnahmen an, um die Sicherheit jeglicher Datenübertragungen zu gewährleisten und zu garantieren, dass die Erweiterung sicher innerhalb des Sicherheitsmodells Ihres Browsers arbeitet."
+    },
+    "section11": {
+      "title": "11. Kontaktinformationen",
+      "intro": "Wenn Sie Fragen oder Anmerkungen zu dieser Datenschutzrichtlinie haben:",
+      "email": "<strong>E-Mail:</strong> <a href=\"mailto:forecast.extension@gmail.com\">forecast.extension@gmail.com</a>",
+      "response": "<strong>Antwortzeit:</strong> Wir bemühen uns, innerhalb von 72 Stunden zu antworten."
+    },
+    "footer": "<small>Diese Datenschutzrichtlinie gilt bei der Nutzung der Faceit Forecast-Erweiterung.</small>"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "header": {
+    "online": "Online:"
+  },
+  "hero": {
+    "title": "FACEIT FORECAST",
+    "subtitle": "Convenient extension for detailed Faceit statistics"
+  },
+  "features": {
+    "title": "Features",
+    "card1": {
+      "title": "New Elo Ratings",
+      "desc": "Adds additional rating levels for more accurate representation of player skills at high ranks, expanding the standard 10-level Faceit system."
+    },
+    "card2": {
+      "title": "Extended Match History",
+      "desc": "Quick access to match scoreboards directly from history. Displays detailed player statistics in matches, including HLTV rating, kills/deaths, KD and KR ratios, and ADR."
+    },
+    "card3": {
+      "title": "Quick Position Selection",
+      "desc": "Set up custom messages that will be automatically sent when selecting a map in the match room."
+    },
+    "card4": {
+      "title": "Team Win Rate",
+      "desc": "View current team win percentages in the match room to quickly assess opponent strength."
+    },
+    "card5": {
+      "title": "Personal Player Statistics",
+      "desc": "See win percentage of each player's recent matches directly on their user card in the match."
+    },
+    "card6": {
+      "title": "Multi-Browser Support",
+      "desc": "Available for multiple browsers including: Chrome, Firefox and Edge with consistent functionality."
+    }
+  },
+  "support": {
+    "title": "Support the Project",
+    "subtitle": "Help us continue developing Faceit Forecast",
+    "boosty": "Boosty",
+    "coffee": "Buy Me a Coffee"
+  },
+  "footer": {
+    "reportIssues": "Report an Issue",
+    "privacyPolicy": "Privacy Policy",
+    "gmail": "Gmail",
+    "disclaimer": "Faceit Forecast is independently developed and has no official endorsement or affiliation with FACEIT.",
+    "copyright": "© 2025 Faceit Forecast. All rights reserved."
+  },
+  "notification": {
+    "copied": "Copied!"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "<strong>Last Updated:</strong> October 15, 2025",
+    "section1": {
+      "title": "1. Overview",
+      "intro": "<strong>Faceit Forecast</strong> is a browser extension that provides detailed statistics and analytics for FACEIT matches and players. Key features include:",
+      "features": "<ul><li>Extended Faceit levels with detailed elo breakdown</li><li>Enhanced match statistics and team win percentages</li><li>Detailed player statistics displayed on user cards</li><li>Specific match history statistics (Score, HLTV 2.1 rating, K/D, K/R, ADR)</li><li>Quick match information preview without following links</li><li>Automatic message sending when selecting maps</li></ul>",
+      "policy": "This policy explains how the extension processes data while providing these features.",
+      "highlight": "<strong>Key Point:</strong> This extension does not collect, store, or process any personal information such as names, email addresses, browsing history, passwords, or personal files."
+    },
+    "section2": {
+      "title": "2. Data We DO NOT Collect",
+      "content": "<ul><li>Personally identifiable information (names, email addresses, phone numbers)</li><li>Browser history or website visits</li><li>Passwords or login credentials</li><li>Personal files or documents</li><li>Location data, except that automatically included in HTTP requests</li></ul>"
+    },
+    "section3": {
+      "title": "3. Communication with External Services",
+      "intro": "The extension interacts with two external services to provide its functionality:",
+      "sub1": {
+        "title": "3.1. Developer Analytics Server",
+        "content": "<ul><li><strong>Service:</strong> <code>forecast.dargen.dev</code></li><li><strong>Purpose:</strong> Service for collecting and processing anonymous analytics, such as counting active users and monitoring online status</li></ul>"
+      },
+      "sub2": {
+        "title": "3.2. Public FACEIT API",
+        "content": "<ul><li><strong>Service:</strong> <code>open.faceit.com</code></li><li><strong>Purpose:</strong> Access to public match and player statistics for analyzing and displaying game information</li></ul>"
+      }
+    },
+    "section4": {
+      "title": "4. Automatic Technical Information",
+      "intro": "As with all internet connections, HTTP requests may automatically include standard technical information such as:",
+      "list": "<ul><li>IP address (required for internet connection)</li><li>Browser user-agent string</li><li>Basic request headers</li></ul>",
+      "highlight": "<strong>Important:</strong> This technical information may be temporarily stored in server logs for technical purposes and service reliability. It is not used to identify users and is not shared with third parties."
+    },
+    "section5": {
+      "title": "5. Local Data Storage",
+      "intro": "The extension may temporarily store data locally in your browser to optimize performance, including:",
+      "list": "<ul><li>Cached FACEIT statistics (temporary, automatically cleared)</li><li>Extension settings and preferences</li></ul>",
+      "note": "This data remains on your device and is not transmitted to external servers."
+    },
+    "section6": {
+      "title": "6. Your Rights and Choices",
+      "content": "<ul><li><strong>Removal:</strong> You can remove the extension at any time through your browser's extension management page</li><li><strong>Data Clearing:</strong> Removing the extension deletes all locally stored data</li><li><strong>Opt-out:</strong> Simply remove the extension to stop all data processing</li></ul>"
+    },
+    "section7": {
+      "title": "7. Third-Party Services",
+      "intro": "This extension uses the public FACEIT API. Please review the <a href=\"https://corporate.faceit.com/privacy/\" target=\"_blank\">FACEIT Privacy Policy</a> for information about their data handling practices.",
+      "sub1": {
+        "title": "7.1. Advertising and Partner Integrations",
+        "content": "<ul><li>The extension may display optional partner advertising banners to support project development. These banners do not collect any personal data, do not track users, and can be disabled at any time through the extension settings.</li></ul>"
+      }
+    },
+    "section8": {
+      "title": "8. Changes to This Policy",
+      "content": "We may periodically update this privacy policy. Any changes will be reflected by updating the \"Last Updated\" date at the top of the page. Continued use of the extension after changes indicates acceptance of the updated policy."
+    },
+    "section9": {
+      "title": "9. Legal Basis (for EU Users)",
+      "content": "For users in the European Union, our legal basis for data processing is legitimate interest in providing extension functionality and anonymous usage statistics measurement."
+    },
+    "section10": {
+      "title": "10. Data Security",
+      "content": "While we do not collect personal data, we apply appropriate technical measures to ensure the security of any data transmissions and guarantee that the extension operates safely within your browser's security model."
+    },
+    "section11": {
+      "title": "11. Contact Information",
+      "intro": "If you have questions or comments about this privacy policy:",
+      "email": "<strong>Email:</strong> <a href=\"mailto:forecast.extension@gmail.com\">forecast.extension@gmail.com</a>",
+      "response": "<strong>Response Time:</strong> We strive to respond within 72 hours."
+    },
+    "footer": "<small>This privacy policy applies when using the Faceit Forecast extension.</small>"
+  }
+}
